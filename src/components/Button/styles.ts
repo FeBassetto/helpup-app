@@ -49,7 +49,7 @@ export const Title = styled.Text<StyledButtonProps>`
     rounded
       ? theme.FONT_FAMILY.MONTSERRAT.SEMIBOLD
       : theme.FONT_FAMILY.MONTSERRAT.MEDIUM};
-  font-size: ${({ theme }) => theme.FONT_SIZE.XL};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
   color: ${({ theme, outline }) =>
     outline ? theme.COLORS.PURPLE_300 : theme.COLORS.WHITE};
 `;

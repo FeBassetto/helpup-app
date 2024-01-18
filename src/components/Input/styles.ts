@@ -25,7 +25,7 @@ export const Container = styled.View`
 `;
 
 export const PlaceholderContainer = styled(Animated.View)<IsPasswordProps>`
-  width: ${({ isPassword }) => (isPassword ? desiredWidth : "95%")};
+  width: ${({ isPassword }) => (isPassword ? `${desiredWidth}px` : "95%")};
   height: 50px;
 
   position: absolute;
@@ -47,7 +47,7 @@ export const PlaceholderButton = styled.TouchableOpacity.attrs({
 
 export const Placeholder = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.ROBOTO.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.MD};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.MD}px`};
   color: ${({ theme }) => theme.COLORS.BLACK};
 
   margin-bottom: 15px;
@@ -76,7 +76,7 @@ export const IconHidePassword = styled(EyeSlash)`
 export const StyledInput = styled.TextInput.attrs(({ theme }) => ({
   selectionColor: theme.COLORS.PURPLE_300,
 }))`
-  width: ${desiredWidth};
+  width: ${desiredWidth}px;
   height: 50px;
 
   position: absolute;
@@ -84,6 +84,6 @@ export const StyledInput = styled.TextInput.attrs(({ theme }) => ({
   left: 0;
 
   font-family: ${({ theme }) => theme.FONT_FAMILY.ROBOTO.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.XL};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
   color: ${({ theme }) => theme.COLORS.GREY_100};
 `;

@@ -21,7 +21,7 @@ export const LoginBox = styled.View`
 
 export const LoginTitle = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.MEDIUM};
-  font-size: ${({ theme }) => theme.FONT_SIZE.XXL};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XXL}px`};
   color: ${({ theme }) => theme.COLORS.BLACK};
 
   margin-top: 10px;
@@ -37,7 +37,7 @@ export const SignupSection = styled.View`
 
 export const SignupText = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.ROBOTO.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.XL};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
   color: ${({ theme }) => theme.COLORS.BLACK};
 
   margin-bottom: -10px;
@@ -51,6 +51,6 @@ export const StyledTouchable = styled.TouchableOpacity.attrs({
 
 export const Link = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.ROBOTO.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.XL};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
   color: ${({ theme }) => theme.COLORS.PURPLE_300};
 `;
