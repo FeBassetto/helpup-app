@@ -11,6 +11,7 @@ export default {
       LIGHT: "Montserrat_300Light",
       REGULAR: "Montserrat_400Regular",
       MEDIUM: "Montserrat_500Medium",
+      SEMIBOLD: "Montserrat_600SemiBold",
       BOLD: "Montserrat_700Bold",
     },
   },

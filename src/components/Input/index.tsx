@@ -59,7 +59,6 @@ export function Input({
     };
   });
 
-  console.log(showPassword);
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };

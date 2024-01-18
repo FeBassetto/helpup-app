@@ -1,10 +1,11 @@
+import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Logo } from "../../components/Logo";
 import {
   Container,
   LoginBox,
   LoginTitle,
-  Button,
+  StyledTouchable,
   Link,
   SignupSection,
   SignupText,
@@ -16,17 +17,22 @@ export function SignIn() {
       <LoginBox>
         <Logo type="primary" />
         <LoginTitle>Entre em sua conta</LoginTitle>
-        <Input placeholder="Email" autoComplete="email" />
+        <Input
+          placeholder="Email"
+          autoComplete="email"
+          keyboardType="email-address"
+        />
         <Input placeholder="Senha" isPassword autoComplete="password" />
-        <Button>
+        <Button background="linear" onPress={() => {}} value="Entrar" />
+        <StyledTouchable>
           <Link>Esqueceu a senha?</Link>
-        </Button>
+        </StyledTouchable>
       </LoginBox>
       <SignupSection>
         <SignupText>Não tem conta?</SignupText>
-        <Button>
+        <StyledTouchable>
           <Link>Criar Conta</Link>
-        </Button>
+        </StyledTouchable>
       </SignupSection>
     </Container>
   );

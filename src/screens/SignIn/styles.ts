@@ -39,12 +39,15 @@ export const SignupText = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.ROBOTO.REGULAR};
   font-size: ${({ theme }) => theme.FONT_SIZE.XL};
   color: ${({ theme }) => theme.COLORS.BLACK};
-  margin-bottom: 10px;
+
+  margin-bottom: -10px;
 `;
 
-export const Button = styled.TouchableOpacity.attrs({
+export const StyledTouchable = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8,
-})``;
+})`
+  margin-top: 20px;
+`;
 
 export const Link = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.ROBOTO.BOLD};
