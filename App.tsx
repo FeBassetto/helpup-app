@@ -1,3 +1,4 @@
+import "@libs/reactotron/config";
 import { StatusBar, Text } from "react-native";
 import {
   useFonts,
@@ -16,8 +17,10 @@ import {
 import { Baloo2_800ExtraBold } from "@expo-google-fonts/baloo-2";
 import { ThemeProvider } from "styled-components/native";
 import { Routes } from "./src/routes";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import theme from "./src/theme";
+import { Provider } from "react-redux";
+import store from "@store/index";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -39,14 +42,18 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={theme.COLORS.PURPLE_300}
-        translucent
-      />
-      <SafeAreaView style={{ flex: 1 }}>
-        <Routes />
-      </SafeAreaView>
+      <Provider store={store}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={theme.COLORS.PURPLE_300}
+          translucent
+        />
+        <SafeAreaProvider style={{ backgroundColor: theme.COLORS.WHITE }}>
+          <SafeAreaView style={{ flex: 1 }}>
+            <Routes />
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </Provider>
     </ThemeProvider>
   );
 }

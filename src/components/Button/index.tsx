@@ -1,4 +1,5 @@
-import { GradientBackground, StyledButton, Title } from "./styles";
+import React from "react";
+import { GradientBackground, Loader, StyledButton, Title } from "./styles";
 
 interface ButtonProps {
   rounded?: boolean;
@@ -6,6 +7,7 @@ interface ButtonProps {
   background: "dark" | "light" | "linear";
   onPress: () => void;
   value: string;
+  isLoading?: boolean;
 }
 
 export function Button({
@@ -14,31 +16,36 @@ export function Button({
   outline = false,
   rounded = false,
   value,
+  isLoading = false,
 }: ButtonProps) {
+  const renderContent = () => {
+    const commonProps = { background, rounded, outline };
+
+    const content = isLoading ? (
+      <Loader {...commonProps} />
+    ) : (
+      <Title {...commonProps}>{value}</Title>
+    );
+
+    if (background === "linear" && !outline) {
+      return (
+        <GradientBackground colors={[""]} {...commonProps}>
+          {content}
+        </GradientBackground>
+      );
+    }
+
+    return content;
+  };
+
   return (
     <StyledButton
       onPress={onPress}
-      background={background}
-      rounded={rounded}
-      outline={outline}
+      {...{ background, rounded, outline }}
       activeOpacity={0.8}
+      disabled={isLoading}
     >
-      {background === "linear" && !outline ? (
-        <GradientBackground
-          colors={[""]}
-          background={background}
-          rounded={rounded}
-          outline={outline}
-        >
-          <Title background={background} rounded={rounded} outline={outline}>
-            {value}
-          </Title>
-        </GradientBackground>
-      ) : (
-        <Title background={background} rounded={rounded} outline={outline}>
-          {value}
-        </Title>
-      )}
+      {renderContent()}
     </StyledButton>
   );
 }

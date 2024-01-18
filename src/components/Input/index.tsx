@@ -18,7 +18,7 @@ import {
 
 interface InputProps extends TextInputProps {
   placeholder: string;
-  onTextChange?: (value: string) => void;
+  onTextChange: (value: string) => void;
   isPassword?: boolean;
 }
 
@@ -53,6 +53,12 @@ export function Input({
     onTextChange(value);
   };
 
+  const handleOnContentSizeChange = () => {
+    if (!isFocus.value && text) {
+      isFocus.value = true;
+    }
+  };
+
   const placeholderButtonStyle = useAnimatedStyle(() => {
     return {
       bottom: withSpring(isFocus.value ? 30 : 0),
@@ -62,6 +68,8 @@ export function Input({
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  // TODO: Remover pinça verde no input = colorControlActivated
 
   return (
     <Container>
@@ -78,7 +86,10 @@ export function Input({
         ref={inputRef}
         onBlur={handleOnInputBlur}
         onChangeText={handleInputChange}
+        onContentSizeChange={handleOnContentSizeChange}
+        onSubmitEditing={handleOnContentSizeChange}
         secureTextEntry={!showPassword && isPassword}
+        isPassword={isPassword}
       />
       {isPassword && (
         <TouchableIcon onPress={toggleShowPassword}>

@@ -1,4 +1,8 @@
 import styled from "styled-components/native";
+import { Dimensions } from "react-native";
+
+const windowHeight = Dimensions.get("window").height;
+const paddingBottom = windowHeight < 750 ? windowHeight / 30 : 100;
 
 export const Container = styled.ScrollView.attrs({
   contentContainerStyle: { flexGrow: 1 },
@@ -16,7 +20,7 @@ export const LoginBox = styled.View`
   align-items: center;
   justify-content: center;
 
-  padding: 100px 0;
+  padding-bottom: ${paddingBottom}px;
 `;
 
 export const LoginTitle = styled.Text`

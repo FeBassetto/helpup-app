@@ -53,3 +53,10 @@ export const Title = styled.Text<StyledButtonProps>`
   color: ${({ theme, outline }) =>
     outline ? theme.COLORS.PURPLE_300 : theme.COLORS.WHITE};
 `;
+
+export const Loader = styled.ActivityIndicator.attrs<StyledButtonProps>(
+  ({ theme, outline }) => ({
+    color: outline ? theme.COLORS.PURPLE_300 : theme.COLORS.WHITE,
+    size: 30,
+  })
+)``;
