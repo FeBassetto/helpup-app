@@ -1,4 +1,4 @@
-import { AuthRequest, LoginResponse } from "@store/types/auth";
+import { AuthRequest } from "@store/types/auth";
 
 export const USERTYPES = {
   LOGIN: "LOGIN",

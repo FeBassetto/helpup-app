@@ -1,7 +1,8 @@
 import React from "react";
 import { GradientBackground, Loader, StyledButton, Title } from "./styles";
+import { TouchableOpacityProps } from "react-native";
 
-interface ButtonProps {
+interface ButtonProps extends TouchableOpacityProps {
   rounded?: boolean;
   outline?: boolean;
   background: "dark" | "light" | "linear";
@@ -17,6 +18,7 @@ export function Button({
   rounded = false,
   value,
   isLoading = false,
+  ...props
 }: ButtonProps) {
   const renderContent = () => {
     const commonProps = { background, rounded, outline };
@@ -40,6 +42,7 @@ export function Button({
 
   return (
     <StyledButton
+      {...props}
       onPress={onPress}
       {...{ background, rounded, outline }}
       activeOpacity={0.8}

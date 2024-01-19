@@ -20,7 +20,7 @@ export default {
     BLACK: "#000000",
     WHITE: "#ffffff",
     RED: "#FF5E5E",
-    PURPLE_50: "#F5F4FF",
+    PURPLE_50: "#E3E7FF",
     PURPLE_100: "#958FFF",
     PURPLE_300: "#6C63FF",
     PURPLE_500: "#4039BA",
