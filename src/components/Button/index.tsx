@@ -31,7 +31,7 @@ export function Button({
 
     if (background === "linear" && !outline) {
       return (
-        <GradientBackground colors={[""]} {...commonProps}>
+        <GradientBackground colors={["#4039BA", "#6C63FFd"]} {...commonProps}>
           {content}
         </GradientBackground>
       );

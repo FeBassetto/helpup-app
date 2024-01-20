@@ -7,12 +7,18 @@ interface IsPasswordProps {
   isPassword: boolean;
 }
 
+interface IsEditable {
+  editable: boolean;
+}
+
 const screenWidth = Dimensions.get("window").width - 80;
 const desiredWidth = screenWidth - 40;
 
-export const Container = styled.View`
+export const Container = styled.View<IsEditable>`
   width: 100%;
   height: 70px;
+
+  opacity: ${({ editable }) => (editable ? "1" : "0.2")};
 
   margin-bottom: 30px;
 

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Container,
   IconShowPassword,
@@ -20,30 +20,36 @@ interface InputProps extends TextInputProps {
   placeholder: string;
   onTextChange: (value: string) => void;
   isPassword?: boolean;
+  hasText?: boolean;
 }
 
 export function Input({
   placeholder,
   onTextChange = () => {},
   isPassword = false,
+  hasText = false,
+  editable = true,
   ...props
 }: InputProps) {
   const [text, setText] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState<boolean | null>(null);
 
-  const isFocus = useSharedValue(false);
+  const isFocus = useSharedValue(hasText);
 
   const inputRef = useRef<TextInput>(null);
 
   const handleOnPlaceholderPress = () => {
-    if (!isFocus.value) {
+    if (!isFocus.value && editable) {
+      setIsInputFocused(true);
       isFocus.value = true;
       inputRef.current?.focus();
     }
   };
 
   const handleOnInputBlur = () => {
-    if (!text) {
+    if (!text && !hasText) {
+      setIsInputFocused(false);
       isFocus.value = false;
     }
   };
@@ -51,12 +57,6 @@ export function Input({
   const handleInputChange = (value: string) => {
     setText(value);
     onTextChange(value);
-  };
-
-  const handleOnContentSizeChange = () => {
-    if (!isFocus.value && text) {
-      isFocus.value = true;
-    }
   };
 
   const placeholderButtonStyle = useAnimatedStyle(() => {
@@ -69,10 +69,19 @@ export function Input({
     setShowPassword((prevState) => !prevState);
   };
 
+  useEffect(() => {
+    if (hasText) {
+      isFocus.value = true;
+    }
+    if (isInputFocused === null && !hasText) {
+      isFocus.value = false;
+    }
+  }, [hasText]);
+
   // TODO: Remover pinça verde no input = colorControlActivated
 
   return (
-    <Container>
+    <Container editable={editable}>
       <PlaceholderContainer
         isPassword={isPassword}
         style={placeholderButtonStyle}
@@ -82,12 +91,12 @@ export function Input({
         </PlaceholderButton>
       </PlaceholderContainer>
       <StyledInput
+        autoCapitalize="none"
         {...props}
+        editable={editable}
         ref={inputRef}
         onBlur={handleOnInputBlur}
         onChangeText={handleInputChange}
-        onContentSizeChange={handleOnContentSizeChange}
-        onSubmitEditing={handleOnContentSizeChange}
         secureTextEntry={!showPassword && isPassword}
         isPassword={isPassword}
       />

@@ -23,6 +23,7 @@ interface StepComponentProps {
   isLastStep: boolean;
   status: Status;
   numberOfSteps: number;
+  lastStep: number | null;
 }
 
 export function StepComponent({
@@ -31,6 +32,7 @@ export function StepComponent({
   status,
   stepName,
   numberOfSteps,
+  lastStep,
 }: StepComponentProps) {
   const progress = useSharedValue(0);
   const checkOpacity = useSharedValue(0);
@@ -52,6 +54,14 @@ export function StepComponent({
   useEffect(() => {
     const targetValue =
       status === "completed" ? 1 : status === "inProgress" ? 0.5 : 0;
+
+    if (lastStep === null) {
+      progress.value = withDelay(
+        300 * (index + 1),
+        withTiming(targetValue, { duration: 300 })
+      );
+      return;
+    }
 
     if (status === "inProgress") {
       progress.value = withDelay(

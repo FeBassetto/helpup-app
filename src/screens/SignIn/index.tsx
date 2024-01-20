@@ -11,13 +11,15 @@ import {
   SignupSection,
   SignupText,
 } from "./styles";
-import { api } from "@services/api";
 import { useState } from "react";
-import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 import { login } from "@store/actions/authActions";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { AxiosResponse } from "axios";
+import { showError } from "@utils/showError";
+import { loginService } from "@services/login";
+import { useMutation } from "react-query";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -27,44 +29,58 @@ export function SignIn() {
   const dispatch = useDispatch();
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-  const showError = (title: string) => {
-    setIsLoading(false);
-    return Toast.show({
-      text1: title,
-      type: "info",
-    });
+  const onLoginSuccess = (response: AxiosResponse) => {
+    if (response.data.error) {
+      return showError(response.data.message);
+    }
+
+    dispatch(
+      login({
+        refreshToken: response.data.refreshToken,
+        token: response.data.token,
+      })
+    );
+    return showError("deu certo"); // TODO: REMOVER
   };
+
+  const onLoginError = () => {
+    showError(
+      "Aconteceu um erro ao tentar conectar com o nosso servidor. Tente novamente mais tarde!"
+    );
+  };
+
+  const loginMutation = useMutation(loginService, {
+    onSuccess: onLoginSuccess,
+    onError: onLoginError,
+  });
 
   const handleOnButtonPress = async () => {
     setIsLoading(true);
+
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const errorMessage: string[] = [];
 
     if (!email.length && !password.length) {
-      return showError("Por favor, insira seu e-mail e senha para continuar.");
+      errorMessage.push("Por favor, insira seu e-mail e senha para continuar.");
     }
 
     if (!emailRegex.test(email)) {
-      return showError(
+      errorMessage.push(
         "Endereço de e-mail inválido. Verifique se está correto e tente novamente."
       );
     }
 
     if (password.length < 6) {
-      return showError("Senha incorreta. Por favor, tente novamente.");
+      errorMessage.push("Senha incorreta. Por favor, tente novamente.");
     }
 
-    const { data, status } = await api.post("/users/sessions", {
-      email: email.toLowerCase(),
-      password,
-    });
-
-    if (status !== 200) {
-      return showError(data.message);
-    } else {
-      dispatch(login({ refreshToken: data.refreshToken, token: data.token }));
-      // TODO: Retirar o loading false pois vai mudar de tela
+    if (errorMessage[0].length) {
       setIsLoading(false);
+      return showError(errorMessage[0]);
     }
+
+    loginMutation.mutate({ email, password });
+    setIsLoading(false);
   };
 
   return (

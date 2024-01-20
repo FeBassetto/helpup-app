@@ -10,9 +10,29 @@ import ImageSrc from "@assets/imgs/smile.png";
 import { Button } from "@components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { storageSignUpDataGet } from "@storage/storageSignUp";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchStorageSignUp } from "@store/actions/signUpActions";
 
 export function PreSignUp() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
+  const dispatch = useDispatch();
+
+  const fetchSignUpStorageData = async () => {
+    setIsLoading(true);
+
+    const data = await storageSignUpDataGet();
+    dispatch(fetchStorageSignUp(data));
+
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchSignUpStorageData();
+  }, []);
 
   return (
     <Container>
@@ -33,6 +53,7 @@ export function PreSignUp() {
           navigation.navigate("signUp");
         }}
         value="Continuar"
+        isLoading={isLoading}
       />
     </Container>
   );

@@ -5,13 +5,14 @@ import { StepComponent } from "./components/StepComponent";
 interface StepsProps {
   steps: string[];
   activeStep: number;
+  lastStep: number | null;
 }
 
 interface ProgressBarProps {
   status: "inProgress" | "completed" | "empty";
 }
 
-export function Steps({ steps, activeStep }: StepsProps) {
+export function Steps({ steps, activeStep, lastStep }: StepsProps) {
   function getStatus(index: number): ProgressBarProps["status"] {
     const isStepReady = index + 1 < activeStep;
     const isInProgress = index + 1 === activeStep;
@@ -36,6 +37,7 @@ export function Steps({ steps, activeStep }: StepsProps) {
             numberOfSteps={steps.length}
             status={getStatus(index)}
             stepName={stepName}
+            lastStep={lastStep}
           />
         ))}
       </ProgressContainer>

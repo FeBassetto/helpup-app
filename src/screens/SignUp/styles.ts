@@ -6,5 +6,17 @@ export const Container = styled.View`
   display: flex;
   align-items: center;
 
-  padding: 0 20px;
+  padding: 20px;
+`;
+
+export const ChildContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+  },
+})`
+  width: 100%;
+
+  margin-top: 40px;
 `;

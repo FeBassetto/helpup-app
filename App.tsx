@@ -21,6 +21,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import theme from "./src/theme";
 import { Provider } from "react-redux";
 import store from "@store/index";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -40,19 +41,23 @@ export default function App() {
     return <Text>Loading</Text>;
   }
 
+  const queryClient = new QueryClient();
+
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={theme.COLORS.PURPLE_300}
-          translucent
-        />
-        <SafeAreaProvider style={{ backgroundColor: theme.COLORS.WHITE }}>
-          <SafeAreaView style={{ flex: 1 }}>
-            <Routes />
-          </SafeAreaView>
-        </SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor={theme.COLORS.PURPLE_300}
+            translucent
+          />
+          <SafeAreaProvider style={{ backgroundColor: theme.COLORS.WHITE }}>
+            <SafeAreaView style={{ flex: 1 }}>
+              <Routes />
+            </SafeAreaView>
+          </SafeAreaProvider>
+        </QueryClientProvider>
       </Provider>
     </ThemeProvider>
   );
