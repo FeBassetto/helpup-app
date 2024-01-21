@@ -4,6 +4,7 @@ import { watchFirstPartSaga } from "./signUp/firstPartSaga";
 import { watchBackStepSaga } from "./signUp/backStepSaga";
 import { watchSecondPartSaga } from "./signUp/secondPartSaga";
 import { watchNextStepSaga } from "./signUp/nextStepSaga";
+import { watchClearDataSaga } from "./signUp/clearDataSaga";
 
 export default function* rootSaga() {
   yield all([fork(watchLoginSaga)]);
@@ -11,4 +12,5 @@ export default function* rootSaga() {
   yield all([fork(watchSecondPartSaga)]);
   yield all([fork(watchBackStepSaga)]);
   yield all([fork(watchNextStepSaga)]);
+  yield all([fork(watchClearDataSaga)]);
 }

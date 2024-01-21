@@ -64,6 +64,8 @@ export function signUpReducer(
         ...state,
         ...action.payload,
       };
+    case SIGNUPTYPES.CLEAR_DATA:
+      return initialState;
     default:
       return state;
   }

@@ -10,6 +10,7 @@ export const SIGNUPTYPES = {
   BACK_STEP: "BACK_STEP",
   NEXT_STEP: "NEXT_STEP",
   FETCH_STORAGE: "FETCH_STORAGE",
+  CLEAR_DATA: "CLEAR_DATA",
 };
 
 export const setFirstPart = (payload: FirstSignUpRequest) => ({
@@ -33,4 +34,8 @@ export const nextStep = () => ({
 export const fetchStorageSignUp = (payload: FetchStorageRequest) => ({
   type: SIGNUPTYPES.FETCH_STORAGE,
   payload,
+});
+
+export const clearSignUpData = () => ({
+  type: SIGNUPTYPES.CLEAR_DATA,
 });

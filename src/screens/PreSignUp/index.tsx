@@ -13,7 +13,10 @@ import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { storageSignUpDataGet } from "@storage/storageSignUp";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchStorageSignUp } from "@store/actions/signUpActions";
+import {
+  clearSignUpData,
+  fetchStorageSignUp,
+} from "@store/actions/signUpActions";
 
 export function PreSignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +28,11 @@ export function PreSignUp() {
     setIsLoading(true);
 
     const data = await storageSignUpDataGet();
-    dispatch(fetchStorageSignUp(data));
+    if (data.actualStep === 3) {
+      dispatch(clearSignUpData());
+    } else {
+      dispatch(fetchStorageSignUp(data));
+    }
 
     setIsLoading(false);
   };

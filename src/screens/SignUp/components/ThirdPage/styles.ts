@@ -1,7 +1,17 @@
 import { Dimensions } from "react-native";
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 const containerWidth = Dimensions.get("window").width - 40;
+
+export const Container = styled(Animated.View)`
+  flex: 1;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export const ContentContainer = styled.View`
   flex: 1;
@@ -10,8 +20,6 @@ export const ContentContainer = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  padding: 20px 0;
 `;
 
 export const Title = styled.Text`
@@ -19,6 +27,8 @@ export const Title = styled.Text`
   font-size: ${({ theme }) => `${theme.FONT_SIZE.XXL}px`};
 
   text-align: center;
+
+  margin-bottom: 40px;
 `;
 
 export const StyledImage = styled.Image`

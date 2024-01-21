@@ -1,21 +1,22 @@
 import { Button } from "@components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
-import { ChildContainer } from "@screens/SignUp/styles";
-import { ContentContainer, StyledImage, Title } from "./styles";
-import BannerSvg from "@assets/svgs/banner.svg";
+import { Container, ContentContainer, Title } from "./styles";
+import { BannerSvg } from "@assets/svgs/banner";
+import { useDispatch } from "react-redux";
+import { clearSignUpData } from "@store/actions/signUpActions";
 
 export function ThirdPage() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
+  const dispatch = useDispatch();
 
   const handlePress = () => {
+    dispatch(clearSignUpData());
     navigation.navigate("signIn");
   };
 
-  // TODO ver como colocar svg
-
   return (
-    <ChildContainer>
+    <Container>
       <ContentContainer>
         <Title>
           Quase lá! Cheque seu email para confirmarmos sua identidade e
@@ -25,9 +26,9 @@ export function ThirdPage() {
       </ContentContainer>
       <Button
         background="dark"
-        onPress={() => {}}
+        onPress={handlePress}
         value="Voltar para tela inicial"
       />
-    </ChildContainer>
+    </Container>
   );
 }

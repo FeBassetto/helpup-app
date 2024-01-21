@@ -13,6 +13,7 @@ import { showError } from "@utils/showError";
 import { registerService } from "@services/register";
 import useCepQuery, { CepApiResponse } from "@hooks/useCepQuery";
 import { parseValidationErrors } from "@utils/parseValidationErrors";
+import { ScrollViewProps } from "react-native";
 
 type AddressFields = "cep" | "neighborhood" | "street" | "city" | "number";
 
@@ -20,7 +21,9 @@ type AddressFormState = {
   [key in AddressFields]: string;
 };
 
-export function SecondPage() {
+type Props = ScrollViewProps;
+
+export function SecondPage(props: Props) {
   const formState = useSelector(({ signUp }: RootState) => signUp);
 
   const [cepResults, setCepResults] = useState<any>(null);
@@ -180,7 +183,7 @@ export function SecondPage() {
   };
 
   return (
-    <ChildContainer>
+    <ChildContainer {...props}>
       {renderInput("cep", "CEP")}
       {renderInput("neighborhood", "Bairro")}
       {renderInput("street", "Rua")}

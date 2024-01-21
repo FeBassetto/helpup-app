@@ -8,6 +8,7 @@ import { RootState } from "@store/reducer";
 import Toast from "react-native-toast-message";
 import { ChildContainer } from "@screens/SignUp/styles";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { ScrollViewProps } from "react-native";
 
 type FormFields =
   | "name"
@@ -20,7 +21,9 @@ type FormState = {
   [key in FormFields]: string;
 };
 
-export function FirstPage() {
+type Props = ScrollViewProps;
+
+export function FirstPage({ ...props }: Props) {
   const initialFormState = useSelector(({ signUp }: RootState) => signUp);
   const [form, setForm] = useState<FormState>({
     name: initialFormState.name || "",
@@ -107,7 +110,7 @@ export function FirstPage() {
   );
 
   return (
-    <ChildContainer>
+    <ChildContainer {...props}>
       {renderInput("name", "Nome Completo")}
       {renderInput("nickname", "Apelido")}
       {renderInput("email", "Email")}
