@@ -43,7 +43,6 @@ export function PreSignUp() {
 
   return (
     <Container>
-      <Logo type="primary" />
       <Title>
         Parabéns pela decisão de se tornar um{" "}
         <HighlightedText>helpuper!</HighlightedText>

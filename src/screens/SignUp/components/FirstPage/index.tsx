@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
 import { useNavigation } from "@react-navigation/native";
@@ -8,7 +8,7 @@ import { RootState } from "@store/reducer";
 import Toast from "react-native-toast-message";
 import { ChildContainer } from "@screens/SignUp/styles";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
-import { ScrollViewProps } from "react-native";
+import { BackHandler, ScrollViewProps } from "react-native";
 
 type FormFields =
   | "name"
@@ -93,7 +93,22 @@ export function FirstPage({ ...props }: Props) {
         password: form.password,
       })
     );
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("signIn");
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const renderInput = (
     field: FormFields,
@@ -106,6 +121,7 @@ export function FirstPage({ ...props }: Props) {
       placeholder={placeholder}
       isPassword={isPassword}
       hasText={!!form[field].length}
+      keyboardType={field === "email" ? "email-address" : "default"}
     />
   );
 

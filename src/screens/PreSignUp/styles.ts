@@ -18,8 +18,6 @@ export const Title = styled.Text`
   font-size: ${({ theme }) => `${theme.FONT_SIZE.XXL}px`};
 
   text-align: center;
-
-  margin-top: 5px;
 `;
 
 export const HighlightedText = styled.Text`

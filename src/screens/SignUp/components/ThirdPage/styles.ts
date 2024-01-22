@@ -1,3 +1,4 @@
+import { BannerSvg } from "@assets/svgs/banner";
 import { Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -11,6 +12,8 @@ export const Container = styled(Animated.View)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  padding-bottom: 20px;
 `;
 
 export const ContentContainer = styled.View`
@@ -34,4 +37,8 @@ export const Title = styled.Text`
 export const StyledImage = styled.Image`
   width: ${containerWidth}px;
   height: ${containerWidth * 0.6}px;
+`;
+
+export const StyledBanner = styled(BannerSvg)`
+  width: 100%;
 `;

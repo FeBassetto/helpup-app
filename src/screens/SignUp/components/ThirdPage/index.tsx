@@ -1,10 +1,11 @@
 import { Button } from "@components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
-import { Container, ContentContainer, Title } from "./styles";
-import { BannerSvg } from "@assets/svgs/banner";
+import { Container, ContentContainer, StyledBanner, Title } from "./styles";
 import { useDispatch } from "react-redux";
 import { clearSignUpData } from "@store/actions/signUpActions";
+import { useEffect } from "react";
+import { BackHandler } from "react-native";
 
 export function ThirdPage() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
@@ -15,6 +16,20 @@ export function ThirdPage() {
     navigation.navigate("signIn");
   };
 
+  useEffect(() => {
+    const backAction = () => {
+      handlePress();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <Container>
       <ContentContainer>
@@ -22,7 +37,7 @@ export function ThirdPage() {
           Quase lá! Cheque seu email para confirmarmos sua identidade e
           completar o cadastro
         </Title>
-        <BannerSvg />
+        <StyledBanner />
       </ContentContainer>
       <Button
         background="dark"
