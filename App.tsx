@@ -20,7 +20,7 @@ import { Routes } from "./src/routes";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import theme from "./src/theme";
 import { Provider } from "react-redux";
-import store from "@store/index";
+import { store } from "@store/index";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function App() {

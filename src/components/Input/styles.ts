@@ -80,9 +80,10 @@ export const IconHidePassword = styled(EyeSlash)`
 `;
 
 export const StyledInput = styled.TextInput.attrs(({ theme }) => ({
-  selectionColor: theme.COLORS.PURPLE_300,
+  selectionColor: theme.COLORS.PURPLE_50,
   underlineColorAndroid: "transparent",
   importantForAutofill: "no",
+  cursorColor: theme.COLORS.PURPLE_300,
 }))<IsPasswordProps>`
   width: ${({ isPassword }) => (isPassword ? `${desiredWidth}px` : "95%")};
   height: 50px;

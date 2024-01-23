@@ -18,13 +18,12 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { AxiosResponse } from "axios";
 import { showError } from "@utils/showError";
-import { loginService } from "@services/login";
+import { loginService } from "@services/auth/login";
 import { useMutation } from "react-query";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
@@ -49,14 +48,12 @@ export function SignIn() {
     );
   };
 
-  const loginMutation = useMutation(loginService, {
+  const { mutate, isLoading } = useMutation(loginService, {
     onSuccess: onLoginSuccess,
     onError: onLoginError,
   });
 
   const handleOnButtonPress = async () => {
-    setIsLoading(true);
-
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const errorMessage: string[] = [];
 
@@ -74,13 +71,11 @@ export function SignIn() {
       errorMessage.push("Senha incorreta. Por favor, tente novamente.");
     }
 
-    if (errorMessage[0].length) {
-      setIsLoading(false);
+    if (errorMessage[0]?.length) {
       return showError(errorMessage[0]);
     }
 
-    loginMutation.mutate({ email, password });
-    setIsLoading(false);
+    mutate({ email, password });
   };
 
   return (
@@ -108,7 +103,7 @@ export function SignIn() {
           onPress={handleOnButtonPress}
           value="Entrar"
         />
-        <StyledTouchable>
+        <StyledTouchable onPress={() => navigation.navigate("forgotPassword")}>
           <Link>Esqueceu a senha?</Link>
         </StyledTouchable>
       </LoginBox>

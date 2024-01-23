@@ -25,7 +25,7 @@ interface InputProps extends TextInputProps {
 
 export function Input({
   placeholder,
-  onTextChange = () => {},
+  onTextChange,
   isPassword = false,
   hasText = false,
   editable = true,
@@ -77,8 +77,6 @@ export function Input({
       isFocus.value = false;
     }
   }, [hasText]);
-
-  // TODO: Remover pinça verde no input = colorControlActivated
 
   return (
     <Container editable={editable}>

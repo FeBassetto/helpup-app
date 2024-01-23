@@ -10,7 +10,7 @@ import {
   setSecondPart,
 } from "@store/actions/signUpActions";
 import { showError } from "@utils/showError";
-import { registerService } from "@services/register";
+import { registerService } from "@services/auth/register";
 import useCepQuery, { CepApiResponse } from "@hooks/useCepQuery";
 import { parseValidationErrors } from "@utils/parseValidationErrors";
 import { ScrollViewProps } from "react-native";
