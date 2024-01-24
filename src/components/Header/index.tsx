@@ -12,6 +12,8 @@ interface HeaderProps {
   type?: "primary" | "back";
 }
 
+// TODO: Conectar com websocket e mostrar quantas notificacoes nao lidas tem
+
 export function Header({ type }: HeaderProps) {
   return (
     <Container>

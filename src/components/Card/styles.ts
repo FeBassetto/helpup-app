@@ -1,10 +1,15 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+interface TypeProps {
+  type: "primary" | "secondary";
+}
+
+export const Container = styled.View<TypeProps>`
   width: 180px;
   height: 180px;
 
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
+  background-color: ${({ theme, type }) =>
+    type === "primary" ? theme.COLORS.WHITE : theme.COLORS.PURPLE_50};
 
   border-radius: 20px;
 
@@ -16,6 +21,16 @@ export const Container = styled.View`
 
   justify-content: space-between;
   align-items: center;
+
+  ${({ type }) =>
+    type === "secondary" &&
+    `
+    shadow-color: #000;
+    shadow-offset: 0px 4px;
+    shadow-opacity: 0.25;
+    shadow-radius: 4px;
+    elevation: 2; 
+  `};
 `;
 
 export const PrimaryTitle = styled.Text`

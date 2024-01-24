@@ -1,6 +1,6 @@
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
-import { Community } from ".";
+import { CommunityOrEvent } from ".";
 
 export const Container = styled.View`
   width: 100%;
@@ -19,7 +19,7 @@ export const Title = styled.Text`
   margin-bottom: 10px;
 `;
 
-export const ItemsContainer = styled(FlatList<Community>).attrs({
+export const ItemsContainer = styled(FlatList<CommunityOrEvent>).attrs({
   contentContainerStyle: {
     paddingLeft: 20,
   },

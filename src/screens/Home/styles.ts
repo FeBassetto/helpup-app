@@ -1,4 +1,7 @@
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
+
+const screenWidth = Dimensions.get("window").width;
 
 export const Container = styled.View`
   flex: 1;
@@ -31,9 +34,16 @@ export const StyledTitle = styled.Text`
   color: ${({ theme }) => theme.COLORS.PURPLE_300};
 `;
 
+export const StyledBanner = styled.Image`
+  margin-top: 20px;
+  width: 100%;
+  height: ${screenWidth * 0.65}px;
+`;
+
 export const StyledImage = styled.Image`
   margin-top: 20px;
   width: 100%;
+  height: ${screenWidth}px;
 `;
 
 export const StyledText = styled.Text`
