@@ -9,7 +9,7 @@ import {
   ContentContainer,
 } from "./styles";
 import { useAnimatedStyle, withSpring } from "react-native-reanimated";
-import { Dimensions, Text } from "react-native";
+import { Dimensions, Text, ViewProps } from "react-native";
 
 const screenWidth = Dimensions.get("window").width;
 const FIRST_OPTION_POSITION = 0;
@@ -44,17 +44,30 @@ const childAnimation = (translateX: number) =>
     ],
   }));
 
-export function Slider() {
+interface SliderProps extends ViewProps {
+  firstTitle: string;
+  secondTitle: string;
+  firstContent: JSX.Element;
+  secondContent: JSX.Element;
+}
+
+export function Slider({
+  firstContent,
+  firstTitle,
+  secondContent,
+  secondTitle,
+  ...props
+}: SliderProps) {
   const [showFirstOption, setShowFirstOption] = useState(true);
 
   return (
-    <Container>
+    <Container {...props}>
       <TopBar>
         <TopOption onPress={() => setShowFirstOption(true)}>
-          <OptionText isActive={showFirstOption}>Novos grupos</OptionText>
+          <OptionText isActive={showFirstOption}>{firstTitle}</OptionText>
         </TopOption>
         <TopOption onPress={() => setShowFirstOption(false)}>
-          <OptionText isActive={!showFirstOption}>Meus grupos</OptionText>
+          <OptionText isActive={!showFirstOption}>{secondTitle}</OptionText>
         </TopOption>
         <TopBorder style={borderAnimation(showFirstOption)} />
       </TopBar>
@@ -62,12 +75,12 @@ export function Slider() {
         <ChildContainer
           style={childAnimation(showFirstOption ? 0 : -screenWidth)}
         >
-          <Text>Testando 1</Text>
+          {firstContent}
         </ChildContainer>
         <ChildContainer
           style={childAnimation(showFirstOption ? screenWidth : 0)}
         >
-          <Text>Testando 2</Text>
+          {secondContent}
         </ChildContainer>
       </ContentContainer>
     </Container>

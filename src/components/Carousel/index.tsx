@@ -42,6 +42,7 @@ export function Carousel({ title, data, type, ...props }: CarouselProps) {
             title={item.title}
             type={type}
             onPress={() => {}}
+            cardType="carousel"
           />
         )}
         keyExtractor={(item, index) => `${item.title}-${index}`}

@@ -1,5 +1,11 @@
 import { Button } from "@components/Button";
-import { Container, PrimaryTitle } from "./styles";
+import {
+  Container,
+  PrimaryTitle,
+  SecondarySub,
+  SecondaryTitle,
+  UserImage,
+} from "./styles";
 import { ViewProps } from "react-native";
 
 interface CardProps extends ViewProps {
@@ -10,6 +16,9 @@ interface CardProps extends ViewProps {
   date?: string;
   onPress: () => void;
   type: "community" | "user" | "event" | "group";
+  cardType: "carousel" | "list";
+  profileUrl?: string;
+  participants?: number;
 }
 
 export function Card({
@@ -18,10 +27,12 @@ export function Card({
   title,
   onPress,
   type,
+  profileUrl,
+  cardType,
+  participants,
   ...props
 }: CardProps) {
-  const containerType =
-    type === "community" || type === "event" ? "primary" : "secondary";
+  const containerType = cardType === "carousel" ? "primary" : "secondary";
 
   return (
     <Container type={containerType} {...props}>
@@ -31,7 +42,19 @@ export function Card({
           <PrimaryTitle>{title}</PrimaryTitle>
         </>
       )}
-      <Button background="dark" value={buttonTitle} onPress={onPress} rounded />
+      {type === "group" && (
+        <>
+          <UserImage source={{ uri: profileUrl }} />
+          <SecondaryTitle>{title}</SecondaryTitle>
+          <SecondarySub>{participants} participantes</SecondarySub>
+        </>
+      )}
+      <Button
+        background={containerType === "primary" ? "light" : "lighter"}
+        value={buttonTitle}
+        onPress={onPress}
+        rounded
+      />
     </Container>
   );
 }

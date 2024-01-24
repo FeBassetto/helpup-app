@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 interface StyledButtonProps {
   rounded: boolean;
   outline: boolean;
-  background: "dark" | "light" | "linear";
+  background: "dark" | "light" | "linear" | "lighter";
 }
 
 export const StyledButton = styled(TouchableOpacity)<StyledButtonProps>`
@@ -24,7 +24,7 @@ export const StyledButton = styled(TouchableOpacity)<StyledButtonProps>`
       ? theme.COLORS.PURPLE_500
       : background === "light"
       ? theme.COLORS.PURPLE_300
-      : "transparent"};
+      : theme.COLORS.PURPLE_100};
   border: ${({ outline, theme }) =>
     outline ? `2px solid ${theme.COLORS.PURPLE_500}` : "none"};
 `;

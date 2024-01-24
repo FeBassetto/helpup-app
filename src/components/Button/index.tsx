@@ -5,7 +5,7 @@ import { TouchableOpacityProps } from "react-native";
 interface ButtonProps extends TouchableOpacityProps {
   rounded?: boolean;
   outline?: boolean;
-  background: "dark" | "light" | "linear";
+  background: "dark" | "light" | "linear" | "lighter";
   onPress: () => void;
   value: string;
   isLoading?: boolean;
