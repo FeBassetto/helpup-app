@@ -24,6 +24,7 @@ module.exports = function (api) {
             "@reducer": "./src/store/reducer",
             "@actions": "./src/store/actions",
             "@saga": "./src/store/saga",
+            "@theme": "./src/theme",
           },
         },
       ],

@@ -39,7 +39,8 @@ export function SignIn() {
         token: response.data.token,
       })
     );
-    return showError("deu certo"); // TODO: REMOVER
+
+    return;
   };
 
   const onLoginError = () => {

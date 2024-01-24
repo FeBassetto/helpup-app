@@ -1,4 +1,4 @@
-import { BannerSvg } from "@assets/svgs/banner";
+import { RegisterBannerSvg } from "@assets/svgs/RegisterBanner";
 import { Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -39,6 +39,6 @@ export const StyledImage = styled.Image`
   height: ${containerWidth * 0.6}px;
 `;
 
-export const StyledBanner = styled(BannerSvg)`
+export const StyledBanner = styled(RegisterBannerSvg)`
   width: 100%;
 `;

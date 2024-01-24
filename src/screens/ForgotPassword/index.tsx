@@ -27,7 +27,7 @@ export function ForgotPassword() {
     {
       onSuccess: ({ data, status }) => {
         if (status === 200) {
-          return;
+          return navigation.navigate("mailForgotPassword");
         }
 
         if (data.message) {

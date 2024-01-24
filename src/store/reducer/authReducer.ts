@@ -17,6 +17,12 @@ export function authReducer(
         refreshToken: payload.refreshToken,
         token: payload.token,
       };
+    case USERTYPES.FETCH_STORAGE:
+      return {
+        ...state,
+        refreshToken: payload.refreshToken,
+        token: payload.token,
+      };
     default:
       return state;
   }

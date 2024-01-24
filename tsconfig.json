@@ -18,7 +18,8 @@
       "@store/*": ["./src/store/*"],
       "@reducer/*": ["./src/store/reducer/*"],
       "@actions/*": ["./src/store/actions/*"],
-      "@saga/*": ["./src/store/saga/*"]
+      "@saga/*": ["./src/store/saga/*"],
+      "@theme/*": ["./src/theme/*"]
     }
   }
 }

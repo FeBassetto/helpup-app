@@ -10,7 +10,7 @@ interface StyledButtonProps {
 
 export const StyledButton = styled(TouchableOpacity)<StyledButtonProps>`
   width: 100%;
-  height: 50px;
+  height: ${({ rounded }) => (rounded ? "35px" : "50px")};
 
   justify-content: center;
   align-items: center;
@@ -35,7 +35,7 @@ export const GradientBackground = styled(LinearGradient).attrs((props) => ({
   end: { x: 1, y: 1 },
 }))<StyledButtonProps>`
   width: 100%;
-  height: 50px;
+  height: ${({ rounded }) => (rounded ? "35px" : "50px")};
 
   border-radius: ${({ rounded }) => (rounded ? "20px" : "10px")};
 
@@ -49,7 +49,8 @@ export const Title = styled.Text<StyledButtonProps>`
     rounded
       ? theme.FONT_FAMILY.MONTSERRAT.SEMIBOLD
       : theme.FONT_FAMILY.MONTSERRAT.MEDIUM};
-  font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
+  font-size: ${({ theme, rounded }) =>
+    rounded ? `${theme.FONT_SIZE.SM}px` : `${theme.FONT_SIZE.XL}px`};
   color: ${({ theme, outline }) =>
     outline ? theme.COLORS.PURPLE_300 : theme.COLORS.WHITE};
 `;

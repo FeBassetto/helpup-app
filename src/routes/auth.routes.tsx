@@ -3,6 +3,7 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import { ForgotPassword } from "@screens/ForgotPassword";
+import { MailForgotPassword } from "@screens/MailForgotPassword";
 import { PreSignUp } from "@screens/PreSignUp";
 import { SignIn } from "@screens/SignIn";
 import { SignUp } from "@screens/SignUp";
@@ -12,6 +13,7 @@ type AuthRoutes = {
   preSignUp: undefined;
   signUp: undefined;
   forgotPassword: undefined;
+  mailForgotPassword: undefined;
 };
 
 export type AuthNavigatorRoutesProps = NativeStackNavigationProp<AuthRoutes>;
@@ -25,6 +27,7 @@ export function AuthRoutes() {
       <Screen name="preSignUp" component={PreSignUp} />
       <Screen name="signUp" component={SignUp} />
       <Screen name="forgotPassword" component={ForgotPassword} />
+      <Screen name="mailForgotPassword" component={MailForgotPassword} />
     </Navigator>
   );
 }
