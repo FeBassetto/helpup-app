@@ -1,4 +1,4 @@
-import { USERTYPES } from "@store/actions/authActions";
+import { AUTHTYPES } from "@store/actions/authActions";
 
 export interface AuthState {
   token: string;
@@ -11,7 +11,7 @@ export interface AuthRequest {
 }
 
 export interface LoginResponse {
-  type: typeof USERTYPES.LOGIN;
+  type: typeof AUTHTYPES.LOGIN;
   payload: AuthRequest;
 }
 

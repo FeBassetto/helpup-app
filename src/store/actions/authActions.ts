@@ -1,16 +1,21 @@
 import { AuthRequest } from "@store/types/auth";
 
-export const USERTYPES = {
+export const AUTHTYPES = {
   LOGIN: "LOGIN",
   FETCH_STORAGE: "FETCH_STORAGE_AUTH",
+  CLEAR_AUTH: "CLEAR_AUTH",
 };
 
 export const login = (payload: AuthRequest) => ({
-  type: USERTYPES.LOGIN,
+  type: AUTHTYPES.LOGIN,
   payload,
 });
 
 export const fetchStorageAuth = (payload: AuthRequest) => ({
-  type: USERTYPES.FETCH_STORAGE,
+  type: AUTHTYPES.FETCH_STORAGE,
   payload,
+});
+
+export const clearAuth = () => ({
+  type: AUTHTYPES.CLEAR_AUTH,
 });
