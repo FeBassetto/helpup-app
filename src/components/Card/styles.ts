@@ -1,4 +1,6 @@
+import { MapPin } from "phosphor-react-native";
 import { Dimensions } from "react-native";
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 interface TypeProps {
@@ -12,7 +14,7 @@ const containerDimension =
 
 const isSmallScreen = widthScreen - 40 < 360;
 
-export const Container = styled.View<TypeProps>`
+export const Container = styled(Animated.View)<TypeProps>`
   width: ${containerDimension}px;
   height: ${containerDimension}px;
 
@@ -58,10 +60,26 @@ export const UserImage = styled.Image`
 
 export const SecondaryTitle = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.MEDIUM};
-  font-size: ${({ theme }) => `${theme.FONT_SIZE.SM}px`};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.MD}px`};
+
+  text-align: center;
 `;
 
 export const SecondarySub = styled.Text`
   font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.SEMIBOLD};
   font-size: ${({ theme }) => `${theme.FONT_SIZE.XS}px`};
+`;
+
+export const LocationContainer = styled.View`
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const LocationIcon = styled(MapPin).attrs(({ theme }) => ({
+  weight: "fill",
+  color: theme.COLORS.PURPLE_300,
+}))`
+  margin-right: 5px;
 `;

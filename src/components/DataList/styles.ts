@@ -2,6 +2,7 @@ import { Dimensions, FlatList } from "react-native";
 import styled from "styled-components/native";
 import { CardProps } from ".";
 
+const screenHeight = Dimensions.get("window").height;
 const widthScreen = Dimensions.get("window").width;
 
 export const Container = styled.View`
@@ -15,6 +16,7 @@ export const StyledList = styled(FlatList<CardProps>).attrs({
     flexGrow: 1,
     paddingTop: 20,
     paddingBottom: 20,
+    justifyContent: "space-between",
   },
 })``;
 
@@ -31,7 +33,7 @@ export const FullContainer = styled.ScrollView.attrs({
 `;
 
 export const StyledImage = styled.Image`
-  width: ${widthScreen / 1.5};
+  width: ${widthScreen / 1.5}px;
   height: ${widthScreen / 1.5}px;
 `;
 

@@ -13,11 +13,17 @@ import { ViewProps } from "react-native";
 interface PaginationProps extends ViewProps {
   activePage: number;
   totalPages: number;
+  onBackPage: () => void;
+  onNextPage: () => void;
+  onPagination: (page: number) => void;
 }
 
 export function Pagination({
   activePage,
   totalPages,
+  onBackPage,
+  onNextPage,
+  onPagination,
   ...props
 }: PaginationProps) {
   if (totalPages <= 1) return null;
@@ -27,7 +33,11 @@ export function Pagination({
     const isDisabled = isLeft ? activePage <= 1 : activePage === totalPages;
 
     return (
-      <ButtonContainer isBlocked={isDisabled} disabled={isDisabled}>
+      <ButtonContainer
+        isBlocked={isDisabled}
+        disabled={isDisabled}
+        onPress={() => (isLeft ? onBackPage() : onNextPage())}
+      >
         {isLeft ? (
           <ArrowLeft weight="bold" color="#fff" />
         ) : (
@@ -38,8 +48,7 @@ export function Pagination({
   };
 
   const renderPageButtons = () => {
-    const pagesToShow = totalPages === 4 ? 4 : 3;
-    return Array.from({ length: pagesToShow }, (_, i) => i + 1).map(
+    return Array.from({ length: totalPages }, (_, i) => i + 1).map(
       (pageNumber) => renderPageButton(pageNumber)
     );
   };
@@ -49,6 +58,7 @@ export function Pagination({
       key={pageNumber}
       isActive={pageNumber === activePage}
       disabled={pageNumber === activePage}
+      onPress={() => onPagination(pageNumber)}
     >
       <ButtonText isActive={pageNumber === activePage}>{pageNumber}</ButtonText>
     </ButtonContainer>

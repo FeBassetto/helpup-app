@@ -6,7 +6,7 @@ import {
   StyledList,
   StyledText,
 } from "./styles";
-import { ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
 import { Card } from "@components/Card";
 import { Pagination } from "./components/Pagination";
 import { Logo } from "@components/Logo";
@@ -14,6 +14,8 @@ import { Loader } from "@components/Loader";
 
 import SmileImage from "@assets/imgs/smile.png";
 import { Button } from "@components/Button";
+import { useState } from "react";
+import { FlipInEasyX } from "react-native-reanimated";
 
 export interface CardProps {
   id: string;
@@ -28,7 +30,7 @@ export interface CardProps {
 interface DataListProps extends ViewProps {
   searchPlaceholder: string;
   onChangeSearchText: (value: string) => void;
-  onSearchPress: () => void;
+  onSearchPress: (text: string) => void;
   list: CardProps[];
   cardButtonTitle: string;
   onCardButtonPress: (id: string) => void;
@@ -38,6 +40,9 @@ interface DataListProps extends ViewProps {
   emptyMessage: string;
   emptyButtonText: string;
   emptyButtonPressed: () => void;
+  onBackPage: () => void;
+  onNextPage: () => void;
+  onPagination: (page: number) => void;
   type: "community" | "user" | "event" | "group";
 }
 
@@ -55,8 +60,18 @@ export function DataList({
   emptyMessage,
   emptyButtonText,
   emptyButtonPressed,
+  onBackPage,
+  onNextPage,
+  onPagination,
   ...props
 }: DataListProps) {
+  const [searchText, setSearchText] = useState("");
+
+  const handleTextChange = (text: string) => {
+    onChangeSearchText(text);
+    setSearchText(text);
+  };
+
   const renderContent = () => {
     if (isLoading) {
       return (
@@ -94,18 +109,26 @@ export function DataList({
               profileUrl={item.profileUrl}
               cardType="list"
               participants={item.participants}
+              local={item.local}
               style={{
                 marginRight: index % 2 === 0 ? 10 : 0,
                 marginLeft: index % 2 !== 0 ? 10 : 0,
                 marginBottom: 20,
               }}
+              index={index}
             />
           )}
           keyExtractor={(item) => item.id}
           numColumns={2}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
-            <Pagination activePage={activePage} totalPages={totalPages} />
+            <Pagination
+              activePage={activePage}
+              totalPages={totalPages}
+              onBackPage={onBackPage}
+              onNextPage={onNextPage}
+              onPagination={onPagination}
+            />
           }
         />
       );
@@ -116,8 +139,8 @@ export function DataList({
     <Container {...props}>
       <Search
         placeholder={searchPlaceholder}
-        onChangeText={onChangeSearchText}
-        onSearchPress={onSearchPress}
+        onChangeText={handleTextChange}
+        onSearchPress={() => onSearchPress(searchText)}
       />
       {renderContent()}
     </Container>

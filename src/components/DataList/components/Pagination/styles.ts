@@ -31,6 +31,8 @@ export const ButtonContainer = styled.TouchableOpacity.attrs({
   width: 40px;
   height: 40px;
 
+  margin-left: 10px;
+
   border-radius: 10px;
 
   display: flex;
@@ -55,7 +57,7 @@ export const PaginationNumberContainer = styled.View`
 
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-end;
 `;
 
 export const CirclesContainer = styled.View`
