@@ -35,7 +35,7 @@ export function Carousel({ title, data, type, ...props }: CarouselProps) {
       <Title>{title}</Title>
       <ItemsContainer
         data={data}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <Card
             buttonTitle="Faça sua parte"
             icon={item.icon}
@@ -43,6 +43,7 @@ export function Carousel({ title, data, type, ...props }: CarouselProps) {
             type={type}
             onPress={() => {}}
             cardType="carousel"
+            index={index}
           />
         )}
         keyExtractor={(item, index) => `${item.title}-${index}`}

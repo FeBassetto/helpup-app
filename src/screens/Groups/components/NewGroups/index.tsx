@@ -6,6 +6,8 @@ import { useQuery } from "react-query";
 import { debounce } from "@utils/debounce";
 import { AxiosResponse } from "axios";
 import { DataList } from "@components/DataList";
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 interface Group {
   admin_id: string;
@@ -27,6 +29,8 @@ export function NewGroups() {
   const { token } = useSelector((state: RootState) => state.auth);
   const [offset, setOffset] = useState(0);
   const [groupsText, setGroupsText] = useState("");
+
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const debouncedInputChange = useCallback(
     debounce((text: string) => {
@@ -74,7 +78,9 @@ export function NewGroups() {
       cardButtonTitle="Ver mais"
       list={dataList}
       type="group"
-      onCardButtonPress={() => {}}
+      onCardButtonPress={(id) => {
+        navigation.navigate("group", { id });
+      }}
       activePage={offset + 1}
       totalPages={totalPages}
       isLoading={isFetching}

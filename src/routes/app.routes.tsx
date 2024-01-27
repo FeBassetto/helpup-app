@@ -2,6 +2,8 @@ import {
   createBottomTabNavigator,
   BottomTabNavigationProp,
 } from "@react-navigation/bottom-tabs";
+import { EditGroup } from "@screens/EditGroup";
+import { Group } from "@screens/Group";
 import { Groups } from "@screens/Groups";
 import { Home } from "@screens/Home";
 import theme from "@theme/index";
@@ -9,9 +11,14 @@ import { House, UsersFour } from "phosphor-react-native";
 
 type AppRoutes = {
   home: undefined;
+  groups: undefined;
+  group: { id: string };
+  editGroup: { id: string; title: string; description: string; city: string };
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
+
+// TODO juntar bottomtabs com nativeStack
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -54,6 +61,20 @@ export function AppRoutes() {
             <UsersFour weight="fill" size={32} color={color} />
           ),
           tabBarLabel: "Grupos",
+        }}
+      />
+      <Screen
+        name="group"
+        component={Group}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+      <Screen
+        name="editGroup"
+        component={EditGroup}
+        options={{
+          tabBarButton: () => null,
         }}
       />
     </Navigator>

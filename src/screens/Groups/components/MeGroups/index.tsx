@@ -7,6 +7,8 @@ import { AxiosResponse } from "axios";
 import { fetchMeGroups } from "@services/group/getMeGroups";
 import { debounce } from "@utils/debounce";
 import { DataList } from "@components/DataList";
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 interface Group {
   admin_id: string;
@@ -29,6 +31,8 @@ export function MeGroups() {
 
   const [offset, setOffset] = useState(0);
   const [groupsText, setGroupsText] = useState("");
+
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const debouncedInputChange = useCallback(
     debounce((text: string) => {
@@ -68,6 +72,8 @@ export function MeGroups() {
 
   const totalPages = data?.data?.totalPages || 0;
 
+  // TODO: Colocar botao para ir na tela de criar grupo
+
   return (
     <DataList
       onChangeSearchText={debouncedInputChange}
@@ -76,7 +82,9 @@ export function MeGroups() {
       cardButtonTitle="Ver mais"
       list={dataList}
       type="group"
-      onCardButtonPress={() => {}}
+      onCardButtonPress={(id) => {
+        navigation.navigate("group", { id });
+      }}
       activePage={offset + 1}
       totalPages={totalPages}
       isLoading={isFetching}
