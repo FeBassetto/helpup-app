@@ -9,6 +9,7 @@ import { debounce } from "@utils/debounce";
 import { DataList } from "@components/DataList";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { showError } from "@utils/showError";
 
 interface Group {
   admin_id: string;
@@ -24,6 +25,9 @@ interface GroupsData {
   groups: Group[];
   totalGroups: number;
   totalPages: number;
+  error?: boolean;
+  message?: string;
+  type?: string;
 }
 
 export function MeGroups() {
@@ -57,10 +61,20 @@ export function MeGroups() {
     setOffset(page - 1);
   };
 
-  const { data, isFetching } = useQuery<AxiosResponse<GroupsData>>(
+  const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
     ["groups", offset, groupsText],
     () => fetchMeGroups({ token, offset, query: groupsText })
   );
+
+  if (error || data?.data?.error) {
+    showError(
+      data?.data.message || "Ocorreu um erro, tente novamente mais tarde!"
+    );
+
+    navigation.goBack();
+
+    return <></>;
+  }
 
   const dataList =
     data?.data?.groups.map((group) => ({

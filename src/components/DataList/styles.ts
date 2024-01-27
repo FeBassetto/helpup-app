@@ -2,7 +2,6 @@ import { Dimensions, FlatList } from "react-native";
 import styled from "styled-components/native";
 import { CardProps } from ".";
 
-const screenHeight = Dimensions.get("window").height;
 const widthScreen = Dimensions.get("window").width;
 
 export const Container = styled.View`

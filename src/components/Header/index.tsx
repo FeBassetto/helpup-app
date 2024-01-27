@@ -15,8 +15,6 @@ interface HeaderProps {
 
 // TODO: Conectar com websocket e mostrar quantas notificacoes nao lidas tem
 
-// TODO colocar o navigation vindo de props
-
 export function Header({ type }: HeaderProps) {
   const navigation = useNavigation();
 

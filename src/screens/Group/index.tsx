@@ -6,7 +6,9 @@ import {
   Information,
   InformationContainer,
   InformationsContainer,
-  SafeContent,
+  FullContainer,
+  NoContentStyledImage,
+  NoContentStyledText,
   StyledCalendar,
   StyledMapPin,
   StyledParticipants,
@@ -24,6 +26,9 @@ import { deleteGroup } from "@services/group/deleteGroup";
 import { Header } from "@components/Header";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 import { joinGroup } from "@services/group/joinGroup";
+import { Logo } from "@components/Logo";
+import SmileImage from "@assets/imgs/smile.png";
+import { Loader } from "@components/Loader";
 
 type RouteParamsProps = {
   id: string;
@@ -93,9 +98,34 @@ export function Group() {
       })
   );
 
-  if (!data?.data) {
-    return <></>;
+  if (isFetching) {
+    return (
+      <FullContainer>
+        <Logo type="primary" />
+        <Loader type="dark" />
+      </FullContainer>
+    );
   }
+
+  if (!data?.data.group) {
+    return (
+      <FullContainer>
+        <Logo type="primary" />
+        <NoContentStyledImage source={SmileImage} />
+        <NoContentStyledText>
+          Ops...! Não encontramos este grupo
+        </NoContentStyledText>
+        <Button
+          background="dark"
+          onPress={() => navigation.goBack()}
+          value="Voltar"
+          style={{ width: 300 }}
+        />
+      </FullContainer>
+    );
+  }
+
+  const isLoading = joinLoading || deleteLoading;
 
   const { city, created_at, description, title } = data.data.group;
   const { totalParticipants } = data.data.participants_data;
@@ -154,6 +184,7 @@ export function Group() {
               marginBottom: -20,
               maxWidth: 350,
             }}
+            isLoading={isLoading}
           />
         )}
         <Button
@@ -172,6 +203,7 @@ export function Group() {
             backgroundColor:
               isAdmin || isUser ? theme.COLORS.RED : theme.COLORS.PURPLE_300,
           }}
+          isLoading={isLoading}
         />
       </ContentContainer>
     </Container>

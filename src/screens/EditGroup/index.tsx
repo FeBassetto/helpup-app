@@ -10,6 +10,8 @@ import { updateGroup } from "@services/group/updateGroup";
 import { showError } from "@utils/showError";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
+import { TextArea } from "@components/TextArea";
+import { parseValidationErrors } from "@utils/parseValidationErrors";
 
 type RouteParamsProps = {
   id: string;
@@ -31,18 +33,30 @@ export function EditGroup() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation(updateGroup, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries(["group", id]);
 
-      // TODO: Adicionar mensagem de sucesso
+      if (data.status === 200) {
+        // TODO: Adicionar mensagem de sucesso
+        console.log("Grupo atualizado com sucesso!");
+      } else if (data.status === 404) {
+        showError("Não foi possível atualizar as informações desse grupo");
+      } else {
+        if (data.data.issues) {
+          const validationMessage = parseValidationErrors(data.data);
+          return showError(validationMessage);
+        }
 
-      console.log("Grupo atualizado com sucesso!");
-      navigation.navigate("group", { id });
+        showError("Não foi possível atualizar as informações desse grupo");
+      }
+      navigation.goBack();
     },
     onError: () => {
       showError(
         "Não foi possível atualizar as informações deste grupo, tente novamente mais tarde!"
       );
+
+      navigation.goBack();
     },
   });
 
@@ -56,8 +70,6 @@ export function EditGroup() {
     });
   };
 
-  // TODO Mudar descricao para TextArea
-
   return (
     <Container>
       <Header type="back" />
@@ -69,11 +81,12 @@ export function EditGroup() {
           hasText={!!newTitle.length}
           value={newTitle}
         />
-        <Input
-          onTextChange={setNewDescription}
-          placeholder="Descricao"
-          hasText={!!newDescription.length}
+        <TextArea
+          title="Descrição"
+          placeholder="Escreva sua nova descrição..."
           value={newDescription}
+          maxLength={100}
+          onChangeText={setNewDescription}
         />
         <Button background="dark" onPress={handleSave} value="Salvar" />
         <Button

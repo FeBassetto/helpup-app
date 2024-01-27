@@ -1,5 +1,8 @@
 import { CalendarBlank, MapPin, Users } from "phosphor-react-native";
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
+
+const widthScreen = Dimensions.get("window").width;
 
 export const Container = styled.View`
   flex: 1;
@@ -18,10 +21,6 @@ export const ContentContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
   padding: 0 20px;
-`;
-
-export const SafeContent = styled.View`
-  width: 100%;
 `;
 
 export const Title = styled.Text`
@@ -85,4 +84,28 @@ export const Description = styled.Text`
   line-height: 30px;
 
   margin-top: 20px;
+`;
+
+export const FullContainer = styled.View`
+  flex: 1;
+
+  width: 100%;
+
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const NoContentStyledImage = styled.Image`
+  width: ${widthScreen / 1.5}px;
+  height: ${widthScreen / 1.5}px;
+`;
+
+export const NoContentStyledText = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.MEDIUM};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
+  text-align: center;
+
+  margin: 20px 0px;
 `;

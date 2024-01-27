@@ -1,13 +1,18 @@
+import React from "react";
 import {
   createBottomTabNavigator,
   BottomTabNavigationProp,
 } from "@react-navigation/bottom-tabs";
-import { EditGroup } from "@screens/EditGroup";
-import { Group } from "@screens/Group";
-import { Groups } from "@screens/Groups";
-import { Home } from "@screens/Home";
 import theme from "@theme/index";
 import { House, UsersFour } from "phosphor-react-native";
+import {
+  NativeStackNavigationProp,
+  createNativeStackNavigator,
+} from "@react-navigation/native-stack";
+import { Groups } from "@screens/Groups";
+import { Group } from "@screens/Group";
+import { EditGroup } from "@screens/EditGroup";
+import { Home } from "@screens/Home";
 
 type AppRoutes = {
   home: undefined;
@@ -18,13 +23,33 @@ type AppRoutes = {
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
 
-// TODO juntar bottomtabs com nativeStack
+type GroupStackParamList = {
+  groups: undefined;
+  group: { id: string };
+  editGroup: { id: string; title: string; description: string; city: string };
+};
 
-const { Navigator, Screen } = createBottomTabNavigator();
+export type GroupStackNavigationProp =
+  NativeStackNavigationProp<GroupStackParamList>;
+
+const { Navigator, Screen } = createNativeStackNavigator<GroupStackParamList>();
+
+function GroupStack() {
+  return (
+    <Navigator screenOptions={{ headerShown: false }}>
+      <Screen name="groups" component={Groups} />
+      <Screen name="group" component={Group} />
+      <Screen name="editGroup" component={EditGroup} />
+    </Navigator>
+  );
+}
+
+const { Navigator: TabNavigator, Screen: TabScreen } =
+  createBottomTabNavigator<AppRoutes>();
 
 export function AppRoutes() {
   return (
-    <Navigator
+    <TabNavigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
@@ -43,7 +68,7 @@ export function AppRoutes() {
         },
       }}
     >
-      <Screen
+      <TabScreen
         name="home"
         component={Home}
         options={{
@@ -53,9 +78,9 @@ export function AppRoutes() {
           tabBarLabel: "Home",
         }}
       />
-      <Screen
+      <TabScreen
         name="groups"
-        component={Groups}
+        component={GroupStack}
         options={{
           tabBarIcon: ({ color }) => (
             <UsersFour weight="fill" size={32} color={color} />
@@ -63,20 +88,6 @@ export function AppRoutes() {
           tabBarLabel: "Grupos",
         }}
       />
-      <Screen
-        name="group"
-        component={Group}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Screen
-        name="editGroup"
-        component={EditGroup}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-    </Navigator>
+    </TabNavigator>
   );
 }

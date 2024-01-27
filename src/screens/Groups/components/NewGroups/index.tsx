@@ -8,6 +8,7 @@ import { AxiosResponse } from "axios";
 import { DataList } from "@components/DataList";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { showError } from "@utils/showError";
 
 interface Group {
   admin_id: string;
@@ -23,6 +24,9 @@ interface GroupsData {
   groups: Group[];
   totalGroups: number;
   totalPages: number;
+  error?: boolean;
+  message?: string;
+  type?: string;
 }
 
 export function NewGroups() {
@@ -55,10 +59,19 @@ export function NewGroups() {
     setOffset(page - 1);
   };
 
-  const { data, isFetching } = useQuery<AxiosResponse<GroupsData>>(
+  const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
     ["groups", offset, groupsText],
     () => fetchGroups({ token, offset, query: groupsText })
   );
+
+  if (error || data?.data?.error) {
+    showError(
+      data?.data.message || "Ocorreu um erro, tente novamente mais tarde!"
+    );
+    navigation.goBack();
+
+    return <></>;
+  }
 
   const dataList =
     data?.data?.groups.map((group) => ({

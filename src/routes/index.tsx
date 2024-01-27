@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { fetchStorageAuth } from "@store/actions/authActions";
 import { LoadingScreen } from "@screens/Loading";
 import { AppRoutes } from "./app.routes";
+import { DangerPopUp } from "@components/DangerPopUp";
 
 export function Routes() {
   const [isTokenLoaded, setIsTokenLoaded] = useState(false);
@@ -85,6 +86,7 @@ export function Routes() {
               info: ({ text1 }) => <TopMessage title={String(text1)} />,
             }}
           />
+          <DangerPopUp />
         </>
       )}
     </NavigationContainer>
