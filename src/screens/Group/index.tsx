@@ -14,7 +14,7 @@ import {
   StyledParticipants,
   Title,
 } from "./styles";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { fetchGroup } from "@services/group/getGroup";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
@@ -29,6 +29,8 @@ import { joinGroup } from "@services/group/joinGroup";
 import { Logo } from "@components/Logo";
 import SmileImage from "@assets/imgs/smile.png";
 import { Loader } from "@components/Loader";
+import { PopUpContext } from "@contexts/PopUpContext";
+import { useContext } from "react";
 
 type RouteParamsProps = {
   id: string;
@@ -68,7 +70,9 @@ export function Group() {
   const { id } = route.params as RouteParamsProps;
 
   const { token } = useSelector((state: RootState) => state.auth);
+  const { openModal } = useContext(PopUpContext);
 
+  const queryClient = useQueryClient();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const { mutate: deleteGroupMutate, isLoading: deleteLoading } = useMutation(
@@ -131,11 +135,14 @@ export function Group() {
   const { totalParticipants } = data.data.participants_data;
   const { isAdmin, isUser } = data.data;
 
+  const onDeleteGroup = () => {
+    deleteGroupMutate({ id, token });
+    return navigation.navigate("groups");
+  };
+
   const onPrimaryButtonPressed = () => {
     if (isAdmin) {
-      deleteGroupMutate({ id, token });
-      // TODO adicionar mensagem de sucesso
-      return navigation.navigate("groups");
+      openModal(onDeleteGroup);
     }
 
     if (isUser) {

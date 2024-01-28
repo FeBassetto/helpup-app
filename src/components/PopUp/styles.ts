@@ -1,6 +1,7 @@
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+export const Container = styled(Animated.View)`
   position: absolute;
 
   height: 100%;
@@ -17,7 +18,7 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const PopUp = styled.View`
+export const PopUpContainer = styled(Animated.View)`
   width: 100%;
   max-width: 350px;
 
