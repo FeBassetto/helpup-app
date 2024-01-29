@@ -14,7 +14,7 @@ import {
   StyledParticipants,
   Title,
 } from "./styles";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { fetchGroup } from "@services/group/getGroup";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
@@ -31,6 +31,9 @@ import SmileImage from "@assets/imgs/smile.png";
 import { Loader } from "@components/Loader";
 import { PopUpContext } from "@contexts/PopUpContext";
 import { useContext } from "react";
+import { processApiResponse } from "@utils/processApiResponse";
+import { showError } from "@utils/showError";
+import { unjoinGroup } from "@services/group/unjoinGroup";
 
 type RouteParamsProps = {
   id: string;
@@ -72,13 +75,14 @@ export function Group() {
   const { token } = useSelector((state: RootState) => state.auth);
   const { openModal } = useContext(PopUpContext);
 
-  const queryClient = useQueryClient();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const { mutate: deleteGroupMutate, isLoading: deleteLoading } = useMutation(
     deleteGroup,
     {
-      onSuccess: () => {},
+      onSuccess: (data) => {
+        console.log(data.data);
+      },
       onError: () => {},
     }
   );
@@ -86,23 +90,52 @@ export function Group() {
   const { mutate: joinGroupMutate, isLoading: joinLoading } = useMutation(
     joinGroup,
     {
-      onSuccess: () => {},
-      onError: () => {},
+      onSuccess: (data) => {
+        processApiResponse({
+          apiData: data,
+          defaultErrorMessage: "Ocorreu um erro, tente novamente mais tarde!",
+          successMessage: "Parabéns, você se juntou ao grupo!",
+        });
+      },
+      onError: () => {
+        showError("Ocorreu um erro, tente novamente mais tarde!");
+      },
     }
   );
 
-  const { data, isFetching } = useQuery<AxiosResponse<GroupData>>(
-    ["group", id],
+  const { mutate: unjoinGroupMutate, isLoading: unjoinLoading } = useMutation(
+    unjoinGroup,
+    {
+      onSuccess: (data) => {
+        processApiResponse({
+          apiData: data,
+          defaultErrorMessage: "Ocorreu um erro, tente novamente mais tarde!",
+          successMessage: "Você saiu do grupo!",
+        });
+      },
+      onError: () => {
+        showError("Ocorreu um erro, tente novamente mais tarde!");
+      },
+    }
+  );
+
+  const isEventLoading = joinLoading || deleteLoading || unjoinLoading;
+
+  const { data, isLoading } = useQuery<AxiosResponse<GroupData>>(
+    ["group", id, joinLoading, deleteLoading],
     () =>
       fetchGroup({
         token: token,
         offset: 0,
         query: "",
         id: id,
-      })
+      }),
+    {
+      enabled: !isEventLoading,
+    }
   );
 
-  if (isFetching) {
+  if (isLoading || isEventLoading) {
     return (
       <FullContainer>
         <Logo type="primary" />
@@ -129,29 +162,26 @@ export function Group() {
     );
   }
 
-  const isLoading = joinLoading || deleteLoading;
-
   const { city, created_at, description, title } = data.data.group;
   const { totalParticipants } = data.data.participants_data;
   const { isAdmin, isUser } = data.data;
 
   const onDeleteGroup = () => {
     deleteGroupMutate({ id, token });
-    return navigation.navigate("groups");
+    return navigation.goBack();
   };
 
   const onPrimaryButtonPressed = () => {
     if (isAdmin) {
-      openModal(onDeleteGroup);
+      return openModal(onDeleteGroup);
     }
 
     if (isUser) {
-      // TODO: criar no backend unfollow
+      unjoinGroupMutate({ id, token });
       return;
     }
 
     joinGroupMutate({ id, token });
-    // TODO: Mostrar mensagem de sucesso, trocar botao
   };
 
   const onSecondaryButtonPressed = () => {
@@ -191,7 +221,7 @@ export function Group() {
               marginBottom: -20,
               maxWidth: 350,
             }}
-            isLoading={isLoading}
+            isLoading={isEventLoading}
           />
         )}
         <Button
@@ -210,7 +240,7 @@ export function Group() {
             backgroundColor:
               isAdmin || isUser ? theme.COLORS.RED : theme.COLORS.PURPLE_300,
           }}
-          isLoading={isLoading}
+          isLoading={isEventLoading}
         />
       </ContentContainer>
     </Container>

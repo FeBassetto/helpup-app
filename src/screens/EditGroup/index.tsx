@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
 import { TextArea } from "@components/TextArea";
 import { parseValidationErrors } from "@utils/parseValidationErrors";
+import { showSuccess } from "@utils/showSuccess";
 
 type RouteParamsProps = {
   id: string;
@@ -34,11 +35,10 @@ export function EditGroup() {
 
   const mutation = useMutation(updateGroup, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(["group", id]);
+      queryClient.refetchQueries(["group", id]);
 
       if (data.status === 200) {
-        // TODO: Adicionar mensagem de sucesso
-        console.log("Grupo atualizado com sucesso!");
+        showSuccess("Grupo atualizado com sucesso!");
       } else if (data.status === 404) {
         showError("Não foi possível atualizar as informações desse grupo");
       } else {
@@ -92,7 +92,7 @@ export function EditGroup() {
         <Button
           background="dark"
           onPress={() => {
-            navigation.navigate("group", { id });
+            navigation.goBack();
           }}
           value="Voltar"
           outline

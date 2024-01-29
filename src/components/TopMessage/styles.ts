@@ -1,6 +1,10 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+interface ContainerProps {
+  isError: boolean;
+}
+
+export const Container = styled.View<ContainerProps>`
   width: 95%;
   z-index: 10;
 
@@ -10,7 +14,8 @@ export const Container = styled.View`
   padding: 10px;
 
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.COLORS.RED};
+  background-color: ${({ theme, isError }) =>
+    isError ? theme.COLORS.RED : theme.COLORS.GREEN};
 
   flex-direction: row;
   align-items: center;

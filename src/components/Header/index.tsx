@@ -8,6 +8,7 @@ import {
 import { ArrowLeft, Bell } from "phosphor-react-native";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { storageAuthTokenRemove } from "@storage/storageAuthToken";
 
 interface HeaderProps {
   type?: "primary" | "back";
@@ -29,7 +30,12 @@ export function Header({ type }: HeaderProps) {
         </TouchableOpacity>
       )}
       <Logo type="secondary" />
-      <NotificationContainer>
+      <NotificationContainer
+        onPress={() => {
+          console.log("press");
+          storageAuthTokenRemove();
+        }}
+      >
         <Bell weight="fill" color="#ffffff" size={30} />
         <NotificationNumber>
           <NotificationText>1</NotificationText>

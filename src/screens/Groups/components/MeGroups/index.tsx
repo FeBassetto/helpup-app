@@ -7,9 +7,11 @@ import { AxiosResponse } from "axios";
 import { fetchMeGroups } from "@services/group/getMeGroups";
 import { debounce } from "@utils/debounce";
 import { DataList } from "@components/DataList";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 import { showError } from "@utils/showError";
+import { Button } from "@components/Button";
+import { CenterContainer } from "@screens/Groups/styles";
 
 interface Group {
   admin_id: string;
@@ -30,7 +32,11 @@ interface GroupsData {
   type?: string;
 }
 
-export function MeGroups() {
+interface MeGroupsProps {
+  focus: boolean;
+}
+
+export function MeGroups({ focus }: MeGroupsProps) {
   const { token } = useSelector((state: RootState) => state.auth);
 
   const [offset, setOffset] = useState(0);
@@ -61,8 +67,8 @@ export function MeGroups() {
     setOffset(page - 1);
   };
 
-  const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
-    ["groups", offset, groupsText],
+  const { data, isLoading, error } = useQuery<AxiosResponse<GroupsData>>(
+    ["groups", offset, groupsText, focus],
     () => fetchMeGroups({ token, offset, query: groupsText })
   );
 
@@ -86,28 +92,34 @@ export function MeGroups() {
 
   const totalPages = data?.data?.totalPages || 0;
 
-  // TODO: Colocar botao para ir na tela de criar grupo
-
   return (
-    <DataList
-      onChangeSearchText={debouncedInputChange}
-      onSearchPress={handleSearchPress}
-      searchPlaceholder="Pesquise um grupo..."
-      cardButtonTitle="Ver mais"
-      list={dataList}
-      type="group"
-      onCardButtonPress={(id) => {
-        navigation.navigate("group", { id });
-      }}
-      activePage={offset + 1}
-      totalPages={totalPages}
-      isLoading={isFetching}
-      emptyButtonPressed={() => {}}
-      emptyButtonText="Criar novo grupo!"
-      emptyMessage="Não encontramos nenhum grupo por aqui. Aproveita e crie o seu!"
-      onBackPage={handleBack}
-      onNextPage={handleNext}
-      onPagination={handlePagination}
-    />
+    <CenterContainer>
+      <DataList
+        onChangeSearchText={debouncedInputChange}
+        onSearchPress={handleSearchPress}
+        searchPlaceholder="Pesquise um grupo..."
+        cardButtonTitle="Ver mais"
+        list={dataList}
+        type="group"
+        onCardButtonPress={(id) => {
+          navigation.navigate("group", { id });
+        }}
+        activePage={offset + 1}
+        totalPages={totalPages}
+        isLoading={isLoading}
+        emptyButtonPressed={() => navigation.navigate("createGroup")}
+        emptyButtonText="Criar novo grupo!"
+        emptyMessage="Não encontramos nenhum grupo por aqui. Aproveita e crie o seu!"
+        onBackPage={handleBack}
+        onNextPage={handleNext}
+        onPagination={handlePagination}
+      />
+      <Button
+        background="light"
+        onPress={() => navigation.navigate("createGroup")}
+        value={"Criar Grupo"}
+        style={{ marginBottom: 10, marginTop: 2 }}
+      />
+    </CenterContainer>
   );
 }

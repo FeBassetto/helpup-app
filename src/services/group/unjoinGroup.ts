@@ -1,13 +1,13 @@
 import { api } from "@services/api";
 
-interface JoinGroupProps {
+interface UnjoinGroupProps {
   token: string;
   id: string;
 }
 
-export async function joinGroup({ token, id }: JoinGroupProps) {
+export async function unjoinGroup({ token, id }: UnjoinGroupProps) {
   const response = await api.post(
-    `/groups/join/${id}`,
+    `/groups/unjoin/${id}`,
     {},
     {
       headers: {

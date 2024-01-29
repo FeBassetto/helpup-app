@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
 import { fetchGroups } from "@services/group/getGroups";
@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { debounce } from "@utils/debounce";
 import { AxiosResponse } from "axios";
 import { DataList } from "@components/DataList";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 import { showError } from "@utils/showError";
 
@@ -29,7 +29,11 @@ interface GroupsData {
   type?: string;
 }
 
-export function NewGroups() {
+interface NewGroupsProps {
+  focus: boolean;
+}
+
+export function NewGroups({ focus }: NewGroupsProps) {
   const { token } = useSelector((state: RootState) => state.auth);
   const [offset, setOffset] = useState(0);
   const [groupsText, setGroupsText] = useState("");
@@ -60,7 +64,7 @@ export function NewGroups() {
   };
 
   const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
-    ["groups", offset, groupsText],
+    ["groups", offset, groupsText, focus],
     () => fetchGroups({ token, offset, query: groupsText })
   );
 
@@ -97,7 +101,7 @@ export function NewGroups() {
       activePage={offset + 1}
       totalPages={totalPages}
       isLoading={isFetching}
-      emptyButtonPressed={() => {}}
+      emptyButtonPressed={() => navigation.navigate("createGroup")}
       emptyButtonText="Criar novo grupo!"
       emptyMessage="Não encontramos nenhum grupo por aqui. Aproveita e crie o seu!"
       onBackPage={handleBack}

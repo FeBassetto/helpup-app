@@ -83,7 +83,10 @@ export function Routes() {
           {!!token ? <AppRoutes /> : <AuthRoutes />}
           <Toast
             config={{
-              info: ({ text1 }) => <TopMessage title={String(text1)} />,
+              error: ({ text1 }) => (
+                <TopMessage title={String(text1)} isError />
+              ),
+              success: ({ text1 }) => <TopMessage title={String(text1)} />,
             }}
           />
           <PopUp />

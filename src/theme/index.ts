@@ -27,6 +27,7 @@ export default {
     PURPLE_700: "#09009F",
     GREY_50: "#EAEAEA",
     GREY_100: "#494949",
+    GREEN: "#66C266",
   },
 
   FONT_SIZE: {

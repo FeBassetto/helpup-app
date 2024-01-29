@@ -13,12 +13,15 @@ import { Groups } from "@screens/Groups";
 import { Group } from "@screens/Group";
 import { EditGroup } from "@screens/EditGroup";
 import { Home } from "@screens/Home";
+import { CreateGroup } from "@screens/CreateGroup";
 
 type AppRoutes = {
   home: undefined;
   groups: undefined;
   group: { id: string };
   editGroup: { id: string; title: string; description: string; city: string };
+  createGroup: undefined;
+  groupsStack: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -26,6 +29,7 @@ export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
 type GroupStackParamList = {
   groups: undefined;
   group: { id: string };
+  createGroup: undefined;
   editGroup: { id: string; title: string; description: string; city: string };
 };
 
@@ -40,6 +44,7 @@ function GroupStack() {
       <Screen name="groups" component={Groups} />
       <Screen name="group" component={Group} />
       <Screen name="editGroup" component={EditGroup} />
+      <Screen name="createGroup" component={CreateGroup} />
     </Navigator>
   );
 }
@@ -79,7 +84,7 @@ export function AppRoutes() {
         }}
       />
       <TabScreen
-        name="groups"
+        name="groupsStack"
         component={GroupStack}
         options={{
           tabBarIcon: ({ color }) => (

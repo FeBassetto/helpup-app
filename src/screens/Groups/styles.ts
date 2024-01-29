@@ -9,3 +9,7 @@ export const ContentContainer = styled.View`
 
   padding: 20px 20px 0px 20px;
 `;
+
+export const CenterContainer = styled.View`
+  flex: 1;
+`;

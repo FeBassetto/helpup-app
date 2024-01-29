@@ -6,7 +6,7 @@ import {
   StyledList,
   StyledText,
 } from "./styles";
-import {  ViewProps } from "react-native";
+import { ViewProps } from "react-native";
 import { Card } from "@components/Card";
 import { Pagination } from "./components/Pagination";
 import { Logo } from "@components/Logo";
