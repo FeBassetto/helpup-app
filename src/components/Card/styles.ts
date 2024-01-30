@@ -1,4 +1,4 @@
-import { MapPin } from "phosphor-react-native";
+import { Clock, MapPin } from "phosphor-react-native";
 import { Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -12,18 +12,18 @@ const widthScreen = Dimensions.get("window").width;
 const containerDimension =
   widthScreen - 40 - 20 < 360 ? (widthScreen - 60) / 2 : 180;
 
-const isSmallScreen = widthScreen - 40 < 360;
+const isSmallScreen = widthScreen - 40 < 340;
 
 export const Container = styled(Animated.View)<TypeProps>`
   width: ${containerDimension}px;
-  height: ${containerDimension}px;
+  height: ${isSmallScreen ? containerDimension + 20 : containerDimension}px;
 
   background-color: ${({ theme, type }) =>
     type === "primary" ? theme.COLORS.WHITE : theme.COLORS.PURPLE_50};
 
   border-radius: 20px;
 
-  padding: ${isSmallScreen ? "10px 10px 5px 10px" : "20px 20px 10px 20px"};
+  padding: 10px 10px 10px 10px;
   margin-right: 10px;
 
   display: flex;
@@ -70,7 +70,7 @@ export const SecondarySub = styled.Text`
   font-size: ${({ theme }) => `${theme.FONT_SIZE.XS}px`};
 `;
 
-export const LocationContainer = styled.View`
+export const InfoContainer = styled.View`
   display: flex;
 
   flex-direction: row;
@@ -80,6 +80,15 @@ export const LocationContainer = styled.View`
 export const LocationIcon = styled(MapPin).attrs(({ theme }) => ({
   weight: "fill",
   color: theme.COLORS.PURPLE_300,
+  size: 20,
+}))`
+  margin-right: 5px;
+`;
+
+export const ClockIcon = styled(Clock).attrs(({ theme }) => ({
+  weight: "fill",
+  color: theme.COLORS.PURPLE_300,
+  size: 20,
 }))`
   margin-right: 5px;
 `;

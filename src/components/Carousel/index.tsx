@@ -4,9 +4,12 @@ import { Card } from "@components/Card";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
 import { ViewProps } from "react-native";
 
+type CommunityWithPress = Community & { onCardPress: () => void };
+type EventWithPress = Event & { onCardPress: () => void };
+
 interface CarouselProps extends ViewProps {
   title: string;
-  data: Community[] | Event[];
+  data: CommunityWithPress[] | EventWithPress[];
   type: "community" | "event";
 }
 
@@ -24,7 +27,7 @@ interface Event {
   icon?: JSX.Element;
 }
 
-export type CommunityOrEvent = Community | Event;
+export type CommunityOrEvent = CommunityWithPress | EventWithPress;
 
 export function Carousel({ title, data, type, ...props }: CarouselProps) {
   const navigation = useNavigation<AppNavigatorRoutesProps>();
@@ -41,7 +44,7 @@ export function Carousel({ title, data, type, ...props }: CarouselProps) {
             icon={item.icon}
             title={item.title}
             type={type}
-            onPress={() => {}}
+            onPress={item.onCardPress}
             cardType="carousel"
             index={index}
           />

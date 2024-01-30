@@ -1,7 +1,8 @@
 import { Button } from "@components/Button";
 import {
+  ClockIcon,
   Container,
-  LocationContainer,
+  InfoContainer,
   LocationIcon,
   PrimaryTitle,
   SecondarySub,
@@ -16,6 +17,9 @@ import {
   withDelay,
   withSpring,
 } from "react-native-reanimated";
+import { Brain, Ear, Eye, IconProps, Wheelchair } from "phosphor-react-native";
+import theme from "@theme/index";
+import { EventType } from "@dtos/event/eventDTO";
 
 interface CardProps extends ViewProps {
   title: string;
@@ -29,6 +33,7 @@ interface CardProps extends ViewProps {
   profileUrl?: string;
   participants?: number;
   index: number;
+  eventType?: EventType;
 }
 
 export function Card({
@@ -43,6 +48,8 @@ export function Card({
   local,
   index,
   style,
+  date,
+  eventType,
   ...props
 }: CardProps) {
   const shouldAnimate = cardType === "list";
@@ -63,6 +70,31 @@ export function Card({
 
   const containerType = cardType === "carousel" ? "primary" : "secondary";
 
+  const iconProps: IconProps = {
+    weight: "bold",
+    size: 20,
+    color: theme.COLORS.PURPLE_300,
+  };
+
+  const eventTypes = {
+    physical: {
+      icon: <Wheelchair {...iconProps} />,
+      text: "Físico",
+    },
+    visual: {
+      icon: <Eye {...iconProps} />,
+      text: "Visual",
+    },
+    auditory: {
+      icon: <Ear {...iconProps} />,
+      text: "Auditivo",
+    },
+    mental: {
+      icon: <Brain {...iconProps} />,
+      text: "Intelectual",
+    },
+  };
+
   return (
     <Container
       type={containerType}
@@ -78,10 +110,31 @@ export function Card({
       {type === "group" && (
         <>
           <SecondaryTitle>{truncateText(title, 25)}</SecondaryTitle>
-          <LocationContainer>
+          <InfoContainer>
             <LocationIcon />
             <SecondarySub>{local}</SecondarySub>
-          </LocationContainer>
+          </InfoContainer>
+        </>
+      )}
+      {type === "event" && (
+        <>
+          <SecondaryTitle>{truncateText(title, 25)}</SecondaryTitle>
+          <InfoContainer>
+            <LocationIcon />
+            <SecondarySub>{local}</SecondarySub>
+          </InfoContainer>
+          <InfoContainer>
+            <ClockIcon />
+            <SecondarySub>{date}</SecondarySub>
+          </InfoContainer>
+          {eventType && (
+            <InfoContainer>
+              {eventTypes[eventType].icon}
+              <SecondarySub style={{ marginLeft: 5 }}>
+                {eventTypes[eventType].text}
+              </SecondarySub>
+            </InfoContainer>
+          )}
         </>
       )}
       <Button

@@ -4,7 +4,7 @@ import {
   BottomTabNavigationProp,
 } from "@react-navigation/bottom-tabs";
 import theme from "@theme/index";
-import { House, UsersFour } from "phosphor-react-native";
+import { CalendarBlank, House, UsersFour } from "phosphor-react-native";
 import {
   NativeStackNavigationProp,
   createNativeStackNavigator,
@@ -14,6 +14,9 @@ import { Group } from "@screens/Group";
 import { EditGroup } from "@screens/EditGroup";
 import { Home } from "@screens/Home";
 import { CreateGroup } from "@screens/CreateGroup";
+import { Events } from "@screens/Events";
+import { EventType } from "@dtos/event/eventDTO";
+import { NavigatorScreenParams } from "@react-navigation/native";
 
 type AppRoutes = {
   home: undefined;
@@ -22,21 +25,25 @@ type AppRoutes = {
   editGroup: { id: string; title: string; description: string; city: string };
   createGroup: undefined;
   groupsStack: undefined;
+  eventsStack: NavigatorScreenParams<StackParamList> | undefined;
+  events: { eventType?: EventType };
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
 
-type GroupStackParamList = {
+type StackParamList = {
   groups: undefined;
   group: { id: string };
   createGroup: undefined;
   editGroup: { id: string; title: string; description: string; city: string };
+  events: { eventType?: EventType };
+  eventsStack: undefined;
 };
 
 export type GroupStackNavigationProp =
-  NativeStackNavigationProp<GroupStackParamList>;
+  NativeStackNavigationProp<StackParamList>;
 
-const { Navigator, Screen } = createNativeStackNavigator<GroupStackParamList>();
+const { Navigator, Screen } = createNativeStackNavigator<StackParamList>();
 
 function GroupStack() {
   return (
@@ -45,6 +52,14 @@ function GroupStack() {
       <Screen name="group" component={Group} />
       <Screen name="editGroup" component={EditGroup} />
       <Screen name="createGroup" component={CreateGroup} />
+    </Navigator>
+  );
+}
+
+function EventStack() {
+  return (
+    <Navigator screenOptions={{ headerShown: false }}>
+      <Screen name="events" component={Events} />
     </Navigator>
   );
 }
@@ -91,6 +106,16 @@ export function AppRoutes() {
             <UsersFour weight="fill" size={32} color={color} />
           ),
           tabBarLabel: "Grupos",
+        }}
+      />
+      <TabScreen
+        name="eventsStack"
+        component={EventStack}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <CalendarBlank weight="fill" size={32} color={color} />
+          ),
+          tabBarLabel: "Eventos",
         }}
       />
     </TabNavigator>

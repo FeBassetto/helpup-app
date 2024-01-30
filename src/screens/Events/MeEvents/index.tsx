@@ -1,58 +1,49 @@
-// MeGroups.tsx
-import React, { useState, useCallback } from "react";
+import { DataList } from "@components/DataList";
+import { CenterContainer } from "../styles";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
+import { useCallback, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { debounce } from "@utils/debounce";
 import { useQuery } from "react-query";
 import { AxiosResponse } from "axios";
-import { fetchMeGroups } from "@services/group/getMeGroups";
-import { debounce } from "@utils/debounce";
-import { DataList } from "@components/DataList";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { fetchMeEvents } from "@services/event/getMeEvents";
 import { showError } from "@utils/showError";
 import { Button } from "@components/Button";
-import { CenterContainer } from "@screens/Groups/styles";
+import { formatDate } from "@utils/formatDate";
+import { Event } from "@dtos/event/eventDTO";
 
-interface Group {
-  admin_id: string;
-  city: string;
-  created_at: string;
-  description: string;
-  distance: number;
-  id: string;
-  title: string;
-}
-
-interface GroupsData {
-  groups: Group[];
-  totalGroups: number;
+interface EventsData {
+  events: Event[];
+  totalEvents: number;
   totalPages: number;
   error?: boolean;
   message?: string;
   type?: string;
 }
 
-interface MeGroupsProps {
+interface MeEventsProps {
   focus: boolean;
 }
 
-export function MeGroups({ focus }: MeGroupsProps) {
+export function MeEvents({ focus }: MeEventsProps) {
   const { token } = useSelector((state: RootState) => state.auth);
 
   const [offset, setOffset] = useState(0);
-  const [groupsText, setGroupsText] = useState("");
+  const [eventsText, setEventsText] = useState("");
 
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const debouncedInputChange = useCallback(
     debounce((text: string) => {
-      setGroupsText(text);
+      setEventsText(text);
     }, 500),
     []
   );
 
   const handleSearchPress = (text: string) => {
-    setGroupsText(text);
+    setEventsText(text);
   };
 
   const handleBack = () => {
@@ -67,9 +58,9 @@ export function MeGroups({ focus }: MeGroupsProps) {
     setOffset(page - 1);
   };
 
-  const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
-    ["groups", offset, groupsText, focus],
-    () => fetchMeGroups({ token, offset, query: groupsText })
+  const { data, isFetching, error } = useQuery<AxiosResponse<EventsData>>(
+    ["events", offset, eventsText, focus],
+    () => fetchMeEvents({ token, offset, query: eventsText })
   );
 
   if (error || data?.data?.error) {
@@ -83,11 +74,11 @@ export function MeGroups({ focus }: MeGroupsProps) {
   }
 
   const dataList =
-    data?.data?.groups.map((group) => ({
-      id: group.id,
-      title: group.title,
-      local: group.city,
-      date: group.created_at,
+    data?.data?.events.map((event) => ({
+      id: event.id,
+      title: event.title,
+      local: event.city,
+      date: formatDate(event.date),
     })) || [];
 
   const totalPages = data?.data?.totalPages || 0;
@@ -97,19 +88,19 @@ export function MeGroups({ focus }: MeGroupsProps) {
       <DataList
         onChangeSearchText={debouncedInputChange}
         onSearchPress={handleSearchPress}
-        searchPlaceholder="Pesquise um grupo..."
+        searchPlaceholder="Pesquise um evento..."
         cardButtonTitle="Ver mais"
         list={dataList}
-        type="group"
+        type="event"
         onCardButtonPress={(id) => {
           navigation.navigate("group", { id });
         }}
         activePage={offset + 1}
         totalPages={totalPages}
         isLoading={isFetching}
-        emptyButtonPressed={() => navigation.navigate("createGroup")}
-        emptyButtonText="Criar novo grupo!"
-        emptyMessage="Não encontramos nenhum grupo por aqui. Aproveita e crie o seu!"
+        emptyButtonPressed={() => navigation.navigate("createGroup")} // TODO: Trocar para event
+        emptyButtonText="Criar novo evento!"
+        emptyMessage="Não encontramos nenhum evento por aqui. Aproveita e crie o seu!"
         onBackPage={handleBack}
         onNextPage={handleNext}
         onPagination={handlePagination}
@@ -117,7 +108,7 @@ export function MeGroups({ focus }: MeGroupsProps) {
       <Button
         background="light"
         onPress={() => navigation.navigate("createGroup")}
-        value={"Criar Grupo"}
+        value={"Criar Evento"}
         style={{ marginBottom: 10, marginTop: 2 }}
       />
     </CenterContainer>

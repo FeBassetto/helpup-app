@@ -15,8 +15,12 @@ import { Carousel } from "@components/Carousel";
 import { Brain, Ear, Eye, IconProps, Wheelchair } from "phosphor-react-native";
 import theme from "@theme/index";
 import { Button } from "@components/Button";
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 export function Home() {
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
+
   const iconProps: IconProps = {
     weight: "bold",
     size: 50,
@@ -27,18 +31,38 @@ export function Home() {
     {
       title: "Deficiência física",
       icon: <Wheelchair {...iconProps} />,
+      onCardPress: () =>
+        navigation.navigate("eventsStack", {
+          screen: "events",
+          params: { eventType: "physical" },
+        }),
     },
     {
       title: "Deficiência auditiva",
       icon: <Ear {...iconProps} />,
+      onCardPress: () =>
+        navigation.navigate("eventsStack", {
+          screen: "events",
+          params: { eventType: "auditory" },
+        }),
     },
     {
       title: "Deficiência visual",
       icon: <Eye {...iconProps} />,
+      onCardPress: () =>
+        navigation.navigate("eventsStack", {
+          screen: "events",
+          params: { eventType: "visual" },
+        }),
     },
     {
       title: "Deficiência intelectual",
       icon: <Brain {...iconProps} />,
+      onCardPress: () =>
+        navigation.navigate("eventsStack", {
+          screen: "events",
+          params: { eventType: "mental" },
+        }),
     },
   ];
 
@@ -72,7 +96,7 @@ export function Home() {
           </StyledText>
           <Button
             background="dark"
-            onPress={() => {}}
+            onPress={() => {}} // TODO: Adicionar navigation
             value="Encontre novas amizades"
           />
         </SecureContainer>

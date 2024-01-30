@@ -81,7 +81,16 @@ export function Group() {
     deleteGroup,
     {
       onSuccess: (data) => {
-        console.log(data.data);
+        const { error } = processApiResponse({
+          apiData: data,
+          defaultErrorMessage:
+            "Não foi possivel deletar o grupo, tente novamente mais tarde!",
+          successMessage: "Grupo deletado com sucesso!",
+        });
+
+        if (!error) {
+          return navigation.goBack();
+        }
       },
       onError: () => {},
     }
@@ -168,7 +177,6 @@ export function Group() {
 
   const onDeleteGroup = () => {
     deleteGroupMutate({ id, token });
-    return navigation.goBack();
   };
 
   const onPrimaryButtonPressed = () => {

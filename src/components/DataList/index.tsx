@@ -15,6 +15,7 @@ import { Loader } from "@components/Loader";
 import SmileImage from "@assets/imgs/smile.png";
 import { Button } from "@components/Button";
 import { useState } from "react";
+import { EventType } from "@dtos/event/eventDTO";
 
 export interface CardProps {
   id: string;
@@ -24,6 +25,7 @@ export interface CardProps {
   date?: string;
   profileUrl?: string;
   participants?: number;
+  eventType?: EventType;
 }
 
 interface DataListProps extends ViewProps {
@@ -101,11 +103,13 @@ export function DataList({
           data={list}
           renderItem={({ item, index }) => (
             <Card
+              eventType={item.eventType}
               buttonTitle={cardButtonTitle}
               onPress={() => onCardButtonPress(item.id)}
               title={item.title}
               type={type}
               profileUrl={item.profileUrl}
+              date={item.date}
               cardType="list"
               participants={item.participants}
               local={item.local}

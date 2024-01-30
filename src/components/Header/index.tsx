@@ -32,7 +32,6 @@ export function Header({ type }: HeaderProps) {
       <Logo type="secondary" />
       <NotificationContainer
         onPress={() => {
-          console.log("press");
           storageAuthTokenRemove();
         }}
       >
