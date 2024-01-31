@@ -1,12 +1,12 @@
 import React from "react";
+import theme from "@theme/index";
 import {
   Container,
-  Option,
-  OptionContainer,
-  OptionText,
   Title,
+  OptionContainer,
+  Option,
+  OptionText,
 } from "./styles";
-import theme from "@theme/index";
 import {
   EventTypeInfo,
   getEventTypeIconsArray,
@@ -14,7 +14,7 @@ import {
 import { EventType } from "@dtos/event/eventDTO";
 
 interface OptionTypesProps {
-  activeType?: EventType;
+  activeType: EventType | null;
   selectOption: (type: EventType) => void;
 }
 
@@ -28,24 +28,20 @@ export function OptionTypes({ activeType, selectOption }: OptionTypesProps) {
     <OptionContainer>
       {events.map((event) => {
         const Icon = event.icon;
+        const isActive = event.eventType === activeType;
+
         return (
           <Option
             key={event.title}
             onPress={() => selectOption(event.eventType)}
-            isActive={event.eventType === activeType}
+            isActive={isActive}
           >
             <Icon
               weight="bold"
-              color={
-                event.eventType === activeType
-                  ? theme.COLORS.WHITE
-                  : theme.COLORS.PURPLE_300
-              }
+              color={isActive ? theme.COLORS.WHITE : theme.COLORS.PURPLE_300}
               size={32}
             />
-            <OptionText isActive={event.eventType === activeType}>
-              {event.title}
-            </OptionText>
+            <OptionText isActive={isActive}>{event.title}</OptionText>
           </Option>
         );
       })}
@@ -54,7 +50,7 @@ export function OptionTypes({ activeType, selectOption }: OptionTypesProps) {
 
   return (
     <Container>
-      <Title>Escolha qual o foco do seu evento</Title>
+      <Title>Escolha a comunidade de seu evento</Title>
       {renderColumn(column1)}
       {renderColumn(column2)}
     </Container>

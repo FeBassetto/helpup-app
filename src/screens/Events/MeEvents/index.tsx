@@ -79,6 +79,7 @@ export function MeEvents({ focus }: MeEventsProps) {
       title: event.title,
       local: event.city,
       date: formatDate(event.date),
+      eventType: event.type,
     })) || [];
 
   const totalPages = data?.data?.totalPages || 1;
@@ -98,19 +99,21 @@ export function MeEvents({ focus }: MeEventsProps) {
         activePage={offset + 1}
         totalPages={totalPages}
         isLoading={isFetching}
-        emptyButtonPressed={() => navigation.navigate("createGroup")} // TODO: Trocar para event
+        emptyButtonPressed={() => navigation.navigate("createEvent")}
         emptyButtonText="Criar novo evento!"
         emptyMessage="Não encontramos nenhum evento por aqui. Aproveita e crie o seu!"
         onBackPage={handleBack}
         onNextPage={handleNext}
         onPagination={handlePagination}
       />
-      <Button
-        background="light"
-        onPress={() => navigation.navigate("createGroup")}
-        value={"Criar Evento"}
-        style={{ marginBottom: 10, marginTop: 2 }}
-      />
+      {dataList.length > 0 && (
+        <Button
+          background="light"
+          onPress={() => navigation.navigate("createEvent")}
+          value={"Criar Evento"}
+          style={{ marginBottom: 10, marginTop: 2 }}
+        />
+      )}
     </CenterContainer>
   );
 }

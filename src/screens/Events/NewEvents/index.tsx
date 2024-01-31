@@ -78,6 +78,7 @@ export function NewEvents({ focus, eventType }: NewEventsProps) {
       local: event.city,
       date: formatDate(event.date),
       eventType: event.type,
+      distance: event.distance,
     })) || [];
 
   const totalPages = data?.data?.totalPages || 1;
@@ -96,7 +97,7 @@ export function NewEvents({ focus, eventType }: NewEventsProps) {
       activePage={offset + 1}
       totalPages={totalPages}
       isLoading={isFetching}
-      emptyButtonPressed={() => navigation.navigate("createGroup")}
+      emptyButtonPressed={() => navigation.navigate("createEvent")}
       emptyButtonText="Criar novo evento!"
       emptyMessage="Não encontramos nenhum evento por aqui. Aproveita e crie o seu!"
       onBackPage={handleBack}

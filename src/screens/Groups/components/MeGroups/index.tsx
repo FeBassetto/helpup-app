@@ -114,12 +114,14 @@ export function MeGroups({ focus }: MeGroupsProps) {
         onNextPage={handleNext}
         onPagination={handlePagination}
       />
-      <Button
-        background="light"
-        onPress={() => navigation.navigate("createGroup")}
-        value={"Criar Grupo"}
-        style={{ marginBottom: 10, marginTop: 2 }}
-      />
+      {dataList.length > 0 && (
+        <Button
+          background="light"
+          onPress={() => navigation.navigate("createGroup")}
+          value={"Criar Grupo"}
+          style={{ marginBottom: 10, marginTop: 2 }}
+        />
+      )}
     </CenterContainer>
   );
 }

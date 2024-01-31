@@ -1,24 +1,23 @@
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { useMutation } from "react-query";
 import { Header } from "@components/Header";
-import { Container, ContentContainer, Title } from "./styles";
 import { Input } from "@components/Input";
 import { TextArea } from "@components/TextArea";
 import { Button } from "@components/Button";
-import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { AppNavigatorRoutesProps } from "@routes/app.routes";
-import { useMutation } from "react-query";
 import { createGroup } from "@services/group/createGroup";
-import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
 import { processApiResponse } from "@utils/processApiResponse";
 import { showError } from "@utils/showError";
 
+import { Container, ContentContainer, Title } from "./styles";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
+
 export function CreateGroup() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
   const { token } = useSelector((state: RootState) => state.auth);
-
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const { mutate, isLoading } = useMutation(createGroup, {

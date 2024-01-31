@@ -20,7 +20,7 @@ export const StyledTextArea = styled.TextInput.attrs(({ theme }) => ({
   border-radius: 20px;
 
   height: 200px;
-  background-color: ${({ theme }) => theme.COLORS.PURPLE_50};
+  background-color: ${({ theme }) => theme.COLORS.WHITE};
 
   margin: 20px 0;
   padding: 20px;

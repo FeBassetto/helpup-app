@@ -164,7 +164,7 @@ export function Event() {
     );
   }
 
-  const { city, description, title, number, street, type, date } =
+  const { city, description, title, number, street, type, date, distance } =
     data.data.event;
   const { totalParticipants } = data.data.participants_data;
   const { isAdmin, isUser } = data.data;
@@ -212,6 +212,7 @@ export function Event() {
           {totalParticipants}{" "}
           {totalParticipants > 1 ? "participantes" : "participante"}
         </Participants>
+        <Participants>{distance.toFixed(2)} km de você</Participants>
         <InformationsContainer>
           <InformationContainer>
             <StyledCalendar />

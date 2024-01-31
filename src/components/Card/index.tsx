@@ -34,6 +34,7 @@ interface CardProps extends ViewProps {
   participants?: number;
   index: number;
   eventType?: EventType;
+  distance?: number;
 }
 
 export function Card({
@@ -50,6 +51,7 @@ export function Card({
   style,
   date,
   eventType,
+  distance,
   ...props
 }: CardProps) {
   const shouldAnimate = cardType === "list";
@@ -95,6 +97,8 @@ export function Card({
     },
   };
 
+  const haveDistance = typeof distance === "number";
+
   return (
     <Container
       type={containerType}
@@ -121,7 +125,9 @@ export function Card({
           <SecondaryTitle>{truncateText(title, 25)}</SecondaryTitle>
           <InfoContainer>
             <LocationIcon />
-            <SecondarySub>{local}</SecondarySub>
+            <SecondarySub>
+              {haveDistance ? `${distance.toFixed(2)} KM` : local}
+            </SecondarySub>
           </InfoContainer>
           <InfoContainer>
             <ClockIcon />

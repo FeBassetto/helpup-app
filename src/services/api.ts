@@ -4,7 +4,7 @@ import {
   storageAuthTokenRemove,
   storageAuthTokenSave,
 } from "@storage/storageAuthToken";
-import { clearAuth } from "@store/actions/authActions";
+import { clearAuth, fetchStorageAuth } from "@store/actions/authActions";
 import { store } from "@store/index";
 import { showError } from "@utils/showError";
 import axios from "axios";
@@ -45,6 +45,9 @@ api.interceptors.response.use(
             refreshToken: refreshTokenResponse,
             token,
           });
+          store.dispatch(
+            fetchStorageAuth({ refreshToken: refreshTokenResponse, token })
+          );
 
           api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           originalRequest.headers["Authorization"] = `Bearer ${token}`;
