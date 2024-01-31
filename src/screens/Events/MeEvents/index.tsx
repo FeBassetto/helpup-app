@@ -93,7 +93,7 @@ export function MeEvents({ focus }: MeEventsProps) {
         list={dataList}
         type="event"
         onCardButtonPress={(id) => {
-          navigation.navigate("group", { id });
+          navigation.navigate("event", { id });
         }}
         activePage={offset + 1}
         totalPages={totalPages}

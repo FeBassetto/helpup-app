@@ -2,7 +2,7 @@ import { DataList } from "@components/DataList";
 import { Event, EventType } from "@dtos/event/eventDTO";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
-import { fetchEvents } from "@services/event/getEvent";
+import { fetchEvents } from "@services/event/getEvents";
 import { RootState } from "@store/reducer";
 import { debounce } from "@utils/debounce";
 import { formatDate } from "@utils/formatDate";
@@ -91,7 +91,7 @@ export function NewEvents({ focus, eventType }: NewEventsProps) {
       list={dataList}
       type="event"
       onCardButtonPress={(id) => {
-        navigation.navigate("group", { id });
+        navigation.navigate("event", { id });
       }}
       activePage={offset + 1}
       totalPages={totalPages}

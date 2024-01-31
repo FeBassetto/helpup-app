@@ -1,52 +1,47 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { Header } from "@components/Header";
 import {
   Container,
   ContentContainer,
   Description,
+  FullContainer,
   Information,
   InformationContainer,
   InformationsContainer,
-  FullContainer,
   NoContentStyledImage,
   NoContentStyledText,
+  Participants,
   StyledCalendar,
+  StyledClock,
+  StyledLocal,
   StyledMapPin,
-  StyledParticipants,
   Title,
 } from "./styles";
-import { useMutation, useQuery } from "react-query";
-import { fetchGroup } from "@services/group/getGroup";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/reducer";
+import { fetchEvent } from "@services/event/getEvent";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AxiosResponse } from "axios";
-import { formatDate } from "@utils/formatDate";
-import { Button } from "@components/Button";
-import theme from "@theme/index";
-import { deleteGroup } from "@services/group/deleteGroup";
-import { Header } from "@components/Header";
-import { AppNavigatorRoutesProps } from "@routes/app.routes";
-import { joinGroup } from "@services/group/joinGroup";
+import { Event as EventDTO } from "@dtos/event/eventDTO";
+import { useMutation, useQuery } from "react-query";
+import { RootState } from "@store/reducer";
+import { useSelector } from "react-redux";
 import { Logo } from "@components/Logo";
+import { Button } from "@components/Button";
 import SmileImage from "@assets/imgs/smile.png";
+import { formatDate } from "@utils/formatDate";
+import { formatTime } from "@utils/formatTime";
+import { getEventTypesIcon } from "@utils/getEventTypesIcon";
+import theme from "@theme/index";
 import { Loader } from "@components/Loader";
+import { deleteEvent } from "@services/event/deleteEvent";
+import { processApiResponse } from "@utils/processApiResponse";
+import { joinEvent } from "@services/event/joinEvent";
+import { showError } from "@utils/showError";
+import { unjoinEvent } from "@services/event/unjoinEvent";
 import { PopUpContext } from "@contexts/PopUpContext";
 import { useContext } from "react";
-import { processApiResponse } from "@utils/processApiResponse";
-import { showError } from "@utils/showError";
-import { unjoinGroup } from "@services/group/unjoinGroup";
 
 type RouteParamsProps = {
   id: string;
 };
-
-interface Group {
-  id: string;
-  title: string;
-  description: string;
-  city: string;
-  created_at: string;
-  admin_id: string;
-}
 
 interface Participant {
   id: string;
@@ -61,31 +56,30 @@ interface ParticipantsData {
   totalParticipants: number;
 }
 
-interface GroupData {
-  group: Group;
+interface EventData {
+  event: EventDTO;
   participants_data: ParticipantsData;
   isAdmin: boolean;
   isUser: boolean;
 }
 
-export function Group() {
+export function Event() {
   const route = useRoute();
   const { id } = route.params as RouteParamsProps;
-
   const { token } = useSelector((state: RootState) => state.auth);
   const { openModal } = useContext(PopUpContext);
 
-  const navigation = useNavigation<AppNavigatorRoutesProps>();
+  const navigation = useNavigation();
 
-  const { mutate: deleteGroupMutate, isLoading: deleteLoading } = useMutation(
-    deleteGroup,
+  const { mutate: deleteEventMutate, isLoading: deleteLoading } = useMutation(
+    deleteEvent,
     {
       onSuccess: (data) => {
         const { error } = processApiResponse({
           apiData: data,
           defaultErrorMessage:
-            "Não foi possivel deletar o grupo, tente novamente mais tarde!",
-          successMessage: "Grupo deletado com sucesso!",
+            "Não foi possivel deletar o evento, tente novamente mais tarde!",
+          successMessage: "Evento deletado com sucesso!",
         });
 
         if (!error) {
@@ -96,14 +90,14 @@ export function Group() {
     }
   );
 
-  const { mutate: joinGroupMutate, isLoading: joinLoading } = useMutation(
-    joinGroup,
+  const { mutate: joinEventMutate, isLoading: joinLoading } = useMutation(
+    joinEvent,
     {
       onSuccess: (data) => {
         processApiResponse({
           apiData: data,
           defaultErrorMessage: "Ocorreu um erro, tente novamente mais tarde!",
-          successMessage: "Parabéns, você se juntou ao grupo!",
+          successMessage: "Parabéns, você se juntou ao evento!",
         });
       },
       onError: () => {
@@ -112,14 +106,14 @@ export function Group() {
     }
   );
 
-  const { mutate: unjoinGroupMutate, isLoading: unjoinLoading } = useMutation(
-    unjoinGroup,
+  const { mutate: unjoinEventMutate, isLoading: unjoinLoading } = useMutation(
+    unjoinEvent,
     {
       onSuccess: (data) => {
         processApiResponse({
           apiData: data,
           defaultErrorMessage: "Ocorreu um erro, tente novamente mais tarde!",
-          successMessage: "Você saiu do grupo!",
+          successMessage: "Você saiu do evento!",
         });
       },
       onError: () => {
@@ -130,18 +124,16 @@ export function Group() {
 
   const isEventLoading = joinLoading || deleteLoading || unjoinLoading;
 
-  const { data, isLoading } = useQuery<AxiosResponse<GroupData>>(
-    ["group", id, joinLoading, deleteLoading],
+  const { data, isLoading } = useQuery<AxiosResponse<EventData>>(
+    ["event", id, isEventLoading],
     () =>
-      fetchGroup({
+      fetchEvent({
         token: token,
         offset: 0,
         query: "",
         id: id,
       }),
-    {
-      enabled: !isEventLoading,
-    }
+    { enabled: !isEventLoading }
   );
 
   if (isLoading || isEventLoading) {
@@ -153,7 +145,7 @@ export function Group() {
     );
   }
 
-  if (!data?.data.group) {
+  if (!data?.data.event) {
     return (
       <FullContainer>
         <Logo type="primary" />
@@ -171,12 +163,16 @@ export function Group() {
     );
   }
 
-  const { city, created_at, description, title } = data.data.group;
+  const { city, description, title, number, street, type, date } =
+    data.data.event;
   const { totalParticipants } = data.data.participants_data;
   const { isAdmin, isUser } = data.data;
 
+  const TypeIcon = getEventTypesIcon(type).icon;
+  const typeTitle = getEventTypesIcon(type).title;
+
   const onDeleteGroup = () => {
-    deleteGroupMutate({ id, token });
+    deleteEventMutate({ id, token });
   };
 
   const onPrimaryButtonPressed = () => {
@@ -185,15 +181,15 @@ export function Group() {
     }
 
     if (isUser) {
-      unjoinGroupMutate({ id, token });
+      unjoinEventMutate({ id, token });
       return;
     }
 
-    joinGroupMutate({ id, token });
+    joinEventMutate({ id, token });
   };
 
   const onSecondaryButtonPressed = () => {
-    navigation.navigate("editGroup", { id, title, description, city });
+    // navigation.navigate(); // TODO: Iplementar
   };
 
   return (
@@ -202,28 +198,47 @@ export function Group() {
       <ContentContainer>
         <Title>{title}</Title>
         <Description>{description}</Description>
+        <Participants>
+          {totalParticipants}{" "}
+          {totalParticipants > 1 ? "participantes" : "participante"}
+        </Participants>
         <InformationsContainer>
           <InformationContainer>
             <StyledCalendar />
-            <Information> {formatDate(created_at)}</Information>
+            <Information>{formatDate(date)}</Information>
           </InformationContainer>
           <InformationContainer>
+            <StyledClock />
+            <Information>{formatTime(date)}</Information>
+          </InformationContainer>
+        </InformationsContainer>
+        <InformationsContainer>
+          <InformationContainer>
             <StyledMapPin />
-            <Information> {city}</Information>
+            <Information>{city}</Information>
+          </InformationContainer>
+          <InformationContainer>
+            {
+              <TypeIcon
+                size={32}
+                weight="bold"
+                color={theme.COLORS.PURPLE_300}
+              />
+            }
+            <Information>{typeTitle}</Information>
           </InformationContainer>
         </InformationsContainer>
         <InformationContainer>
-          <StyledParticipants />
+          <StyledLocal />
           <Information>
-            {totalParticipants}{" "}
-            {totalParticipants > 1 ? "participantes" : "participante"}
+            {street}, {number}
           </Information>
         </InformationContainer>
         {isAdmin && (
           <Button
             background="light"
             onPress={onSecondaryButtonPressed}
-            value={"Editar grupo"}
+            value={"Editar evento"}
             style={{
               marginTop: 40,
               marginBottom: -20,
@@ -233,14 +248,14 @@ export function Group() {
           />
         )}
         <Button
-          background="light"
+          background="dark"
           onPress={onPrimaryButtonPressed}
           value={
             isAdmin
-              ? "Excluir grupo"
+              ? "Excluir evento"
               : isUser
-              ? "Sair do grupo"
-              : "Entrar no grupo"
+              ? "Desmarcar presença"
+              : "Marcar presença"
           }
           style={{
             marginTop: 40,

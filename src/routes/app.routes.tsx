@@ -17,6 +17,7 @@ import { CreateGroup } from "@screens/CreateGroup";
 import { Events } from "@screens/Events";
 import { EventType } from "@dtos/event/eventDTO";
 import { NavigatorScreenParams } from "@react-navigation/native";
+import { Event } from "@screens/Event";
 
 type AppRoutes = {
   home: undefined;
@@ -27,6 +28,7 @@ type AppRoutes = {
   groupsStack: undefined;
   eventsStack: NavigatorScreenParams<StackParamList> | undefined;
   events: { eventType?: EventType };
+  event: { id: string };
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -38,6 +40,7 @@ type StackParamList = {
   editGroup: { id: string; title: string; description: string; city: string };
   events: { eventType?: EventType };
   eventsStack: undefined;
+  event: { id: string };
 };
 
 export type GroupStackNavigationProp =
@@ -60,6 +63,7 @@ function EventStack() {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="events" component={Events} />
+      <Screen name="event" component={Event} />
     </Navigator>
   );
 }

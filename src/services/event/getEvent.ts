@@ -1,27 +1,23 @@
-import { EventType } from "@dtos/event/eventDTO";
 import { api } from "@services/api";
 
-interface FetchEventsProps {
+interface FetchEventProps {
   token: string;
   offset: number;
   query: string;
-  eventType?: EventType;
+  id: string;
 }
 
-export async function fetchEvents({
+export async function fetchEvent({
   offset,
   query,
   token,
-  eventType,
-}: FetchEventsProps) {
-  const params = {
-    offset: offset,
-    query: query,
-    ...(eventType && { type: eventType }),
-  };
-
-  const response = await api.get("/events", {
-    params: params,
+  id,
+}: FetchEventProps) {
+  const response = await api.get(`/events/${id}`, {
+    params: {
+      offset: offset,
+      query: query,
+    },
     headers: {
       Authorization: `Bearer ${token}`,
     },
