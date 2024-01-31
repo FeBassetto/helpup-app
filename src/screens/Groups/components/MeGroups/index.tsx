@@ -68,7 +68,7 @@ export function MeGroups({ focus }: MeGroupsProps) {
   };
 
   const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
-    ["groups", offset, groupsText, focus],
+    ["meGroups", offset, groupsText, focus],
     () => fetchMeGroups({ token, offset, query: groupsText })
   );
 
@@ -90,7 +90,7 @@ export function MeGroups({ focus }: MeGroupsProps) {
       date: group.created_at,
     })) || [];
 
-  const totalPages = data?.data?.totalPages || 0;
+  const totalPages = data?.data?.totalPages || 1;
 
   return (
     <CenterContainer>

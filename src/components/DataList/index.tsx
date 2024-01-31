@@ -124,6 +124,7 @@ export function DataList({
           keyExtractor={(item) => item.id}
           numColumns={2}
           showsVerticalScrollIndicator={false}
+          havePagination={totalPages > 1}
           ListFooterComponent={
             <Pagination
               activePage={activePage}

@@ -64,7 +64,7 @@ export function NewGroups({ focus }: NewGroupsProps) {
   };
 
   const { data, isFetching, error } = useQuery<AxiosResponse<GroupsData>>(
-    ["groups", offset, groupsText, focus],
+    ["newGroups", offset, groupsText, focus],
     () => fetchGroups({ token, offset, query: groupsText })
   );
 
@@ -85,7 +85,7 @@ export function NewGroups({ focus }: NewGroupsProps) {
       date: group.created_at,
     })) || [];
 
-  const totalPages = data?.data?.totalPages || 0;
+  const totalPages = data?.data?.totalPages || 1;
 
   return (
     <DataList

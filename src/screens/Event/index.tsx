@@ -38,6 +38,7 @@ import { showError } from "@utils/showError";
 import { unjoinEvent } from "@services/event/unjoinEvent";
 import { PopUpContext } from "@contexts/PopUpContext";
 import { useContext } from "react";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 type RouteParamsProps = {
   id: string;
@@ -69,7 +70,7 @@ export function Event() {
   const { token } = useSelector((state: RootState) => state.auth);
   const { openModal } = useContext(PopUpContext);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const { mutate: deleteEventMutate, isLoading: deleteLoading } = useMutation(
     deleteEvent,
@@ -189,7 +190,16 @@ export function Event() {
   };
 
   const onSecondaryButtonPressed = () => {
-    // navigation.navigate(); // TODO: Iplementar
+    navigation.navigate("editEvent", {
+      id,
+      city,
+      date,
+      description,
+      number,
+      street,
+      title,
+      type,
+    });
   };
 
   return (

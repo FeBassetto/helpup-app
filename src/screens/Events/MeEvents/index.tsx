@@ -59,7 +59,7 @@ export function MeEvents({ focus }: MeEventsProps) {
   };
 
   const { data, isFetching, error } = useQuery<AxiosResponse<EventsData>>(
-    ["events", offset, eventsText, focus],
+    ["meEvents", offset, eventsText, focus],
     () => fetchMeEvents({ token, offset, query: eventsText })
   );
 
@@ -81,7 +81,7 @@ export function MeEvents({ focus }: MeEventsProps) {
       date: formatDate(event.date),
     })) || [];
 
-  const totalPages = data?.data?.totalPages || 0;
+  const totalPages = data?.data?.totalPages || 1;
 
   return (
     <CenterContainer>

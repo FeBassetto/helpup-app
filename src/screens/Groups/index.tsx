@@ -14,7 +14,8 @@ export function Groups() {
   const [isFocus, setIsFocus] = useState(focus);
 
   useEffect(() => {
-    queryClient.refetchQueries(["groups"]);
+    queryClient.refetchQueries(["newGroups"]);
+    queryClient.refetchQueries(["meGroups"]);
     if (focus) {
       setIsFocus(true);
     }

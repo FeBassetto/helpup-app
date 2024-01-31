@@ -10,14 +10,16 @@ export const Container = styled.View`
   padding-top: 20px;
 `;
 
-export const StyledList = styled(FlatList<CardProps>).attrs({
+export const StyledList = styled(FlatList<CardProps>).attrs<{
+  havePagination: boolean;
+}>(({ havePagination }) => ({
   contentContainerStyle: {
     flexGrow: 1,
     paddingTop: 20,
     paddingBottom: 20,
-    justifyContent: "space-between",
+    justifyContent: havePagination ? "space-between" : "flex-start",
   },
-})``;
+}))``;
 
 export const FullContainer = styled.ScrollView.attrs({
   contentContainerStyle: {

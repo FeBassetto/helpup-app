@@ -57,7 +57,7 @@ export function NewEvents({ focus, eventType }: NewEventsProps) {
     setOffset(page - 1);
   };
   const { data, isFetching, error } = useQuery<AxiosResponse<EventsData>>(
-    ["events", offset, eventsText, focus],
+    ["newEvents", offset, eventsText, focus],
     () => fetchEvents({ token, offset, query: eventsText, eventType })
   );
 
@@ -80,7 +80,7 @@ export function NewEvents({ focus, eventType }: NewEventsProps) {
       eventType: event.type,
     })) || [];
 
-  const totalPages = data?.data?.totalPages || 0;
+  const totalPages = data?.data?.totalPages || 1;
 
   return (
     <DataList

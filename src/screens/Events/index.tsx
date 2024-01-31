@@ -29,7 +29,8 @@ export function Events({ route }: EventsScreenProps) {
   const [isFocus, setIsFocus] = useState(focus);
 
   useEffect(() => {
-    queryClient.refetchQueries(["groups"]);
+    queryClient.refetchQueries(["meEvents"]);
+    queryClient.refetchQueries(["newEvents"]);
     if (focus) {
       setIsFocus(true);
     } else {
