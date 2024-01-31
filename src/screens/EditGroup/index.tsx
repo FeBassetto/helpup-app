@@ -33,7 +33,7 @@ export function EditGroup() {
   const navigation = useNavigation<AppNavigatorRoutesProps>();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(updateGroup, {
+  const { mutate, isLoading } = useMutation(updateGroup, {
     onSuccess: (data) => {
       queryClient.refetchQueries(["group", id]);
 
@@ -61,7 +61,7 @@ export function EditGroup() {
   });
 
   const handleSave = async () => {
-    mutation.mutate({
+    mutate({
       token,
       id,
       title: newTitle,
@@ -88,7 +88,12 @@ export function EditGroup() {
           maxLength={100}
           onChangeText={setNewDescription}
         />
-        <Button background="dark" onPress={handleSave} value="Salvar" />
+        <Button
+          background="dark"
+          onPress={handleSave}
+          value="Salvar"
+          isLoading={isLoading}
+        />
         <Button
           background="dark"
           onPress={() => {

@@ -46,7 +46,7 @@ export function EditEvent() {
   const queryClient = useQueryClient();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
-  const { mutate } = useMutation(updateEvent, {
+  const { mutate, isLoading } = useMutation(updateEvent, {
     onSuccess: (data) => {
       queryClient.refetchQueries(["event"]);
 
@@ -131,7 +131,12 @@ export function EditEvent() {
           maxLength={100}
           onChangeText={setNewDescription}
         />
-        <Button background="dark" onPress={handleSave} value="Salvar" />
+        <Button
+          background="dark"
+          onPress={handleSave}
+          value="Salvar"
+          isLoading={isLoading}
+        />
         <Button
           background="dark"
           onPress={() => {
