@@ -4,7 +4,7 @@ import {
   BottomTabNavigationProp,
 } from "@react-navigation/bottom-tabs";
 import theme from "@theme/index";
-import { CalendarBlank, House, UsersFour } from "phosphor-react-native";
+import { CalendarBlank, House, Users, UsersFour } from "phosphor-react-native";
 import {
   NativeStackNavigationProp,
   createNativeStackNavigator,
@@ -20,6 +20,8 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 import { Event } from "@screens/Event";
 import { EditEvent } from "@screens/EditEvent";
 import { CreateEvent } from "@screens/CreateEvent";
+import { Friends } from "@screens/Friends";
+import { Friend } from "@screens/Friend";
 
 type AppRoutes = {
   home: undefined;
@@ -42,6 +44,9 @@ type AppRoutes = {
     number: number;
   };
   createEvent: undefined;
+  friendsStack: undefined;
+  friends: undefined;
+  friend: { id: string };
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -64,6 +69,9 @@ type StackParamList = {
     number: number;
   };
   createEvent: undefined;
+  friendsStack: undefined;
+  friends: undefined;
+  friend: { id: string };
 };
 
 export type GroupStackNavigationProp =
@@ -89,6 +97,15 @@ function EventStack() {
       <Screen name="event" component={Event} />
       <Screen name="editEvent" component={EditEvent} />
       <Screen name="createEvent" component={CreateEvent} />
+    </Navigator>
+  );
+}
+
+function FriendsStack() {
+  return (
+    <Navigator screenOptions={{ headerShown: false }}>
+      <Screen name="friends" component={Friends} />
+      <Screen name="friend" component={Friend} />
     </Navigator>
   );
 }
@@ -145,6 +162,16 @@ export function AppRoutes() {
             <CalendarBlank weight="fill" size={32} color={color} />
           ),
           tabBarLabel: "Eventos",
+        }}
+      />
+      <TabScreen
+        name="friendsStack"
+        component={FriendsStack}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Users weight="fill" size={32} color={color} />
+          ),
+          tabBarLabel: "Amigos",
         }}
       />
     </TabNavigator>

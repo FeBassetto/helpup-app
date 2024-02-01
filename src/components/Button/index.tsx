@@ -42,11 +42,11 @@ export function Button({
 
   return (
     <StyledButton
-      {...props}
       onPress={onPress}
-      {...{ background, rounded, outline }}
       activeOpacity={0.8}
       disabled={isLoading}
+      {...props}
+      {...{ background, rounded, outline }}
     >
       {renderContent()}
     </StyledButton>

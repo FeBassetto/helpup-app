@@ -77,6 +77,13 @@ export const InfoContainer = styled.View`
   align-items: center;
 `;
 
+export const ProfileImage = styled.Image`
+  width: 50px;
+  height: 50px;
+
+  border-radius: 25px;
+`;
+
 export const LocationIcon = styled(MapPin).attrs(({ theme }) => ({
   weight: "fill",
   color: theme.COLORS.PURPLE_300,

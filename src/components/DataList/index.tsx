@@ -27,6 +27,7 @@ export interface CardProps {
   participants?: number;
   eventType?: EventType;
   distance?: number;
+  nick?: string;
 }
 
 interface DataListProps extends ViewProps {
@@ -115,6 +116,7 @@ export function DataList({
               participants={item.participants}
               distance={item.distance}
               local={item.local}
+              nick={item.nick}
               style={{
                 marginRight: index % 2 === 0 ? 10 : 0,
                 marginLeft: index % 2 !== 0 ? 10 : 0,

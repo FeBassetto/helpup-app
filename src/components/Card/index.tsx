@@ -5,6 +5,7 @@ import {
   InfoContainer,
   LocationIcon,
   PrimaryTitle,
+  ProfileImage,
   SecondarySub,
   SecondaryTitle,
 } from "./styles";
@@ -35,6 +36,7 @@ interface CardProps extends ViewProps {
   index: number;
   eventType?: EventType;
   distance?: number;
+  nick?: string;
 }
 
 export function Card({
@@ -52,6 +54,7 @@ export function Card({
   date,
   eventType,
   distance,
+  nick,
   ...props
 }: CardProps) {
   const shouldAnimate = cardType === "list";
@@ -141,6 +144,17 @@ export function Card({
               </SecondarySub>
             </InfoContainer>
           )}
+        </>
+      )}
+      {type === "user" && (
+        <>
+          <ProfileImage
+            source={{
+              uri: `${profileUrl}`,
+            }}
+          />
+          <SecondaryTitle>{truncateText(title, 25)}</SecondaryTitle>
+          <SecondarySub>{nick}</SecondarySub>
         </>
       )}
       <Button
