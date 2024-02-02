@@ -22,6 +22,7 @@ import { EditEvent } from "@screens/EditEvent";
 import { CreateEvent } from "@screens/CreateEvent";
 import { Friends } from "@screens/Friends";
 import { Friend } from "@screens/Friend";
+import { FriendInvitations } from "@screens/FriendInvitations";
 
 type AppRoutes = {
   home: undefined;
@@ -47,6 +48,7 @@ type AppRoutes = {
   friendsStack: undefined;
   friends: undefined;
   friend: { id: string };
+  friendInvitations: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -72,6 +74,7 @@ type StackParamList = {
   friendsStack: undefined;
   friends: undefined;
   friend: { id: string };
+  friendInvitations: undefined;
 };
 
 export type GroupStackNavigationProp =
@@ -106,6 +109,7 @@ function FriendsStack() {
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="friends" component={Friends} />
       <Screen name="friend" component={Friend} />
+      <Screen name="friendInvitations" component={FriendInvitations} />
     </Navigator>
   );
 }

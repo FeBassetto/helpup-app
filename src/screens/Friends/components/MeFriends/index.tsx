@@ -89,7 +89,7 @@ export function MeFriends({ focus }: MeFriendsProps) {
         activePage={offset + 1}
         totalPages={totalPages}
         isLoading={isFetching}
-        emptyButtonPressed={() => navigation.navigate("createGroup")}
+        emptyButtonPressed={() => navigation.navigate("friendInvitations")}
         emptyButtonText="Ver pedidos de amizades!"
         emptyMessage="Não encontramos nenhum amigo na sua região. Aproveita e convide novos amigos!"
         onBackPage={handleBack}
@@ -99,7 +99,7 @@ export function MeFriends({ focus }: MeFriendsProps) {
       {dataList.length > 0 && (
         <Button
           background="light"
-          onPress={() => navigation.navigate("createGroup")}
+          onPress={() => navigation.navigate("friendInvitations")}
           value="Ver pedidos de amizade"
           style={{ marginBottom: 10, marginTop: 2 }}
         />

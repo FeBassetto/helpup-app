@@ -8,7 +8,6 @@ import {
 } from "./styles";
 import { ViewProps } from "react-native";
 import { Card } from "@components/Card";
-import { Pagination } from "./components/Pagination";
 import { Logo } from "@components/Logo";
 import { Loader } from "@components/Loader";
 
@@ -16,6 +15,7 @@ import SmileImage from "@assets/imgs/smile.png";
 import { Button } from "@components/Button";
 import { useState } from "react";
 import { EventType } from "@dtos/event/eventDTO";
+import { Pagination } from "@components/Pagination";
 
 export interface CardProps {
   id: string;

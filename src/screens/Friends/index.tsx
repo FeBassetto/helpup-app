@@ -29,9 +29,9 @@ export function Friends() {
       <Header />
       <ContentContainer>
         <Slider
-          firstContent={<NewFriends focus={focus} />}
+          firstContent={<NewFriends focus={isFocus} />}
           firstTitle="Novos amigos"
-          secondContent={<MeFriends focus={focus} />}
+          secondContent={<MeFriends focus={isFocus} />}
           secondTitle="Meus amigos"
         />
       </ContentContainer>
