@@ -38,9 +38,6 @@ export function Events({ route }: EventsScreenProps) {
     }
   }, [focus]);
 
-  if (!focus) {
-    return <></>;
-  }
   return (
     <Container>
       <ContentContainer>

@@ -78,7 +78,7 @@ export function Config() {
   const { token } = useSelector((state: RootState) => state.auth);
   const { openModal } = useContext(PopUpContext);
 
-  const { mutate, isLoading } = useMutation(deleteUser, {
+  const { mutate } = useMutation(deleteUser, {
     onSuccess: (data) => {
       processApiResponse({
         apiData: data,
@@ -100,7 +100,7 @@ export function Config() {
 
   const handleClearCache = async () => {
     await storageClear();
-    showSuccess("Armazenamento foi limpo!")
+    showSuccess("Armazenamento foi limpo!");
   };
 
   const settings = [
@@ -109,7 +109,13 @@ export function Config() {
       settings: [
         { Icon: UserCircle, text: "Editar Conta", action: () => {} },
         { Icon: Password, text: "Trocar Senha", action: () => {} },
-        { Icon: Bell, text: "Notificações", action: () => {} },
+        {
+          Icon: Bell,
+          text: "Notificações",
+          action: () => {
+            navigation.navigate("notifications");
+          },
+        },
       ],
     },
     {
@@ -125,7 +131,9 @@ export function Config() {
         {
           Icon: Trash,
           text: "Limpar armazenamento",
-          action: handleClearCache,
+          action: () => {
+            openModal(handleClearCache);
+          },
         },
       ],
     },

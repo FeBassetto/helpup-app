@@ -1,4 +1,3 @@
-import { Header } from "@components/Header";
 import { Container, ContentContainer } from "./styles";
 import { Slider } from "@components/Slider";
 import { NewGroups } from "./components/NewGroups";
@@ -20,10 +19,6 @@ export function Groups() {
       setIsFocus(true);
     }
   }, [focus]);
-
-  if (!focus) {
-    return <></>;
-  }
 
   return (
     <Container>

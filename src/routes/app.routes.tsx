@@ -31,14 +31,15 @@ import { Friend } from "@screens/Friend";
 import { FriendInvitations } from "@screens/FriendInvitations";
 import { Config } from "@screens/Config";
 import { Header } from "@components/Header";
+import { Notifications } from "@screens/Notifications";
 
-type AppRoutes = {
+export type AppRoutes = {
   home: undefined;
   groups: undefined;
   group: { id: string };
   editGroup: { id: string; title: string; description: string; city: string };
   createGroup: undefined;
-  groupsStack: undefined;
+  groupsStack: NavigatorScreenParams<StackParamList> | undefined;
   eventsStack: NavigatorScreenParams<StackParamList> | undefined;
   events: { eventType?: EventType };
   event: { id: string };
@@ -53,12 +54,13 @@ type AppRoutes = {
     number: number;
   };
   createEvent: undefined;
-  friendsStack: undefined;
+  friendsStack: NavigatorScreenParams<StackParamList> | undefined;
   friends: undefined;
   friend: { id: string };
   friendInvitations: undefined;
   config: undefined;
-  configStack: undefined;
+  configStack: NavigatorScreenParams<StackParamList> | undefined;
+  notifications: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -87,6 +89,7 @@ type StackParamList = {
   friendInvitations: undefined;
   config: undefined;
   configStack: undefined;
+  notifications: undefined;
 };
 
 export type GroupStackNavigationProp =
@@ -172,11 +175,16 @@ function FriendsStack() {
 
 function ConfigStack() {
   return (
-    <Navigator >
+    <Navigator>
       <Screen
         name="config"
         component={Config}
         options={{ header: () => <Header /> }}
+      />
+      <Screen
+        name="notifications"
+        component={Notifications}
+        options={{ header: () => <Header type="back" isNotifications /> }}
       />
     </Navigator>
   );

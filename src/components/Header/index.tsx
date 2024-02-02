@@ -8,25 +8,27 @@ import {
 import { ArrowLeft, Bell } from "phosphor-react-native";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { fetchMeNotifications } from "@services/notification/getNotifications";
+import { fetchNotifications } from "@services/notification/getNotifications";
 import { useQuery } from "react-query";
 import { AxiosResponse } from "axios";
 import { NotificationsResponse } from "@dtos/notification/notificationDTO";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/reducer";
+import { AppNavigatorRoutesProps } from "@routes/app.routes";
 
 interface HeaderProps {
   type?: "primary" | "back";
+  isNotifications?: boolean;
 }
 
-export function Header({ type }: HeaderProps) {
-  const navigation = useNavigation();
+export function Header({ type, isNotifications = false }: HeaderProps) {
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
   const { token } = useSelector((state: RootState) => state.auth);
 
   function useFetchNotifications(token: string, onlyNew: boolean) {
     return useQuery<AxiosResponse<NotificationsResponse>>(
       ["notifications", { onlyNew }],
-      () => fetchMeNotifications({ token, onlyNew }),
+      () => fetchNotifications({ token, onlyNew }),
       {}
     );
   }
@@ -40,13 +42,23 @@ export function Header({ type }: HeaderProps) {
       {type === "back" && (
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            isNotifications
+              ? navigation.navigate("config")
+              : navigation.goBack();
+          }}
         >
           <ArrowLeft weight="bold" color="#ffffff" size={30} />
         </TouchableOpacity>
       )}
       <Logo type="secondary" />
-      <NotificationContainer onPress={() => {}}>
+      <NotificationContainer
+        onPress={() => {
+          navigation.navigate("configStack", {
+            screen: "notifications",
+          });
+        }}
+      >
         <Bell weight="fill" color="#ffffff" size={30} />
         {notifications.length > 0 && (
           <NotificationNumber>

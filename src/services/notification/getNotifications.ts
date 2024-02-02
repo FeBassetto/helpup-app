@@ -5,7 +5,7 @@ interface FetchNotificationsProps {
   onlyNew: boolean;
 }
 
-export async function fetchMeNotifications({
+export async function fetchNotifications({
   onlyNew,
   token,
 }: FetchNotificationsProps) {

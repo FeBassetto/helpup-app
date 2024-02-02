@@ -21,9 +21,6 @@ export function Friends() {
     }
   }, [focus]);
 
-  if (!focus) {
-    return <></>;
-  }
   return (
     <Container>
       <ContentContainer>

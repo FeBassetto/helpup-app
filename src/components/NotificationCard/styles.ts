@@ -28,10 +28,41 @@ export const Container = styled.TouchableOpacity.attrs({
   elevation: 5;
 
   margin-bottom: 20px;
+
+  position: relative;
 `;
 
 export const InformationContainer = styled.View`
-  width: 70%;
+  width: 80%;
+`;
+
+export const NewContainer = styled.View`
+  width: 10%;
+`;
+
+export const NewCircle = styled.View`
+  width: 10px;
+  height: 10px;
+
+  border-radius: 5px;
+
+  background-color: ${({ theme }) => theme.COLORS.PURPLE_500};
+`;
+
+export const NotificationContainer = styled.View`
+  width: 80%;
+`;
+
+export const SinceTime = styled.Text`
+  position: absolute;
+
+  right: 10px;
+  top: 10px;
+
+  font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.SEMIBOLD};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.XS}px`};
+
+  color: ${({ theme }) => theme.COLORS.PURPLE_700};
 `;
 
 export const Title = styled.Text`
@@ -39,6 +70,15 @@ export const Title = styled.Text`
   font-size: ${({ theme }) => `${theme.FONT_SIZE.XL}px`};
 
   color: ${({ theme }) => theme.COLORS.PURPLE_500};
+`;
+
+export const Description = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.SEMIBOLD};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.SM}px`};
+
+  color: ${({ theme }) => theme.COLORS.PURPLE_300};
+
+  margin-top: 5px;
 `;
 
 export const InviteContainer = styled.View`
