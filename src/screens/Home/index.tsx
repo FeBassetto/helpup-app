@@ -96,7 +96,9 @@ export function Home() {
           </StyledText>
           <Button
             background="dark"
-            onPress={() => {}} // TODO: Adicionar navigation
+            onPress={() => {
+              navigation.navigate("friends");
+            }}
             value="Encontre novas amizades"
           />
         </SecureContainer>

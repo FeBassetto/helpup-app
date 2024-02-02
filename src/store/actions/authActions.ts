@@ -16,6 +16,6 @@ export const fetchStorageAuth = (payload: AuthRequest) => ({
   payload,
 });
 
-export const clearAuth = () => ({
+export const logOut = () => ({
   type: AUTHTYPES.CLEAR_AUTH,
 });

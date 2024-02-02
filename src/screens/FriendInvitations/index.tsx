@@ -79,7 +79,6 @@ export function FriendInvitations() {
 
   return (
     <Container>
-      <Header type="back" />
       {haveInvitations ? (
         <>
           <Title>Pedidos de amizades</Title>

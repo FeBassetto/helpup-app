@@ -4,7 +4,13 @@ import {
   BottomTabNavigationProp,
 } from "@react-navigation/bottom-tabs";
 import theme from "@theme/index";
-import { CalendarBlank, House, Users, UsersFour } from "phosphor-react-native";
+import {
+  CalendarBlank,
+  Gear,
+  House,
+  Users,
+  UsersFour,
+} from "phosphor-react-native";
 import {
   NativeStackNavigationProp,
   createNativeStackNavigator,
@@ -23,6 +29,8 @@ import { CreateEvent } from "@screens/CreateEvent";
 import { Friends } from "@screens/Friends";
 import { Friend } from "@screens/Friend";
 import { FriendInvitations } from "@screens/FriendInvitations";
+import { Config } from "@screens/Config";
+import { Header } from "@components/Header";
 
 type AppRoutes = {
   home: undefined;
@@ -49,6 +57,8 @@ type AppRoutes = {
   friends: undefined;
   friend: { id: string };
   friendInvitations: undefined;
+  config: undefined;
+  configStack: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -75,6 +85,8 @@ type StackParamList = {
   friends: undefined;
   friend: { id: string };
   friendInvitations: undefined;
+  config: undefined;
+  configStack: undefined;
 };
 
 export type GroupStackNavigationProp =
@@ -84,32 +96,88 @@ const { Navigator, Screen } = createNativeStackNavigator<StackParamList>();
 
 function GroupStack() {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
-      <Screen name="groups" component={Groups} />
-      <Screen name="group" component={Group} />
-      <Screen name="editGroup" component={EditGroup} />
-      <Screen name="createGroup" component={CreateGroup} />
+    <Navigator>
+      <Screen
+        name="groups"
+        component={Groups}
+        options={{ header: () => <Header /> }}
+      />
+      <Screen
+        name="group"
+        component={Group}
+        options={{ header: () => <Header type="back" /> }}
+      />
+      <Screen
+        name="editGroup"
+        component={EditGroup}
+        options={{ header: () => <Header type="back" /> }}
+      />
+      <Screen
+        name="createGroup"
+        component={CreateGroup}
+        options={{ header: () => <Header type="back" /> }}
+      />
     </Navigator>
   );
 }
 
 function EventStack() {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
-      <Screen name="events" component={Events} />
-      <Screen name="event" component={Event} />
-      <Screen name="editEvent" component={EditEvent} />
-      <Screen name="createEvent" component={CreateEvent} />
+    <Navigator>
+      <Screen
+        name="events"
+        component={Events}
+        options={{ header: () => <Header /> }}
+      />
+      <Screen
+        name="event"
+        component={Event}
+        options={{ header: () => <Header type="back" /> }}
+      />
+      <Screen
+        name="editEvent"
+        component={EditEvent}
+        options={{ header: () => <Header type="back" /> }}
+      />
+      <Screen
+        name="createEvent"
+        component={CreateEvent}
+        options={{ header: () => <Header type="back" /> }}
+      />
     </Navigator>
   );
 }
 
 function FriendsStack() {
   return (
-    <Navigator screenOptions={{ headerShown: false }}>
-      <Screen name="friends" component={Friends} />
-      <Screen name="friend" component={Friend} />
-      <Screen name="friendInvitations" component={FriendInvitations} />
+    <Navigator>
+      <Screen
+        name="friends"
+        component={Friends}
+        options={{ header: () => <Header /> }}
+      />
+      <Screen
+        name="friend"
+        component={Friend}
+        options={{ header: () => <Header type="back" /> }}
+      />
+      <Screen
+        name="friendInvitations"
+        component={FriendInvitations}
+        options={{ header: () => <Header type="back" /> }}
+      />
+    </Navigator>
+  );
+}
+
+function ConfigStack() {
+  return (
+    <Navigator >
+      <Screen
+        name="config"
+        component={Config}
+        options={{ header: () => <Header /> }}
+      />
     </Navigator>
   );
 }
@@ -119,65 +187,77 @@ const { Navigator: TabNavigator, Screen: TabScreen } =
 
 export function AppRoutes() {
   return (
-    <TabNavigator
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: true,
-        tabBarActiveTintColor: theme.COLORS.WHITE,
-        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.5)",
-        tabBarStyle: {
-          backgroundColor: theme.COLORS.PURPLE_300,
-          borderTopWidth: 0,
-          height: 60,
-          paddingBottom: 5,
-          paddingTop: 5,
-        },
-        tabBarLabelStyle: {
-          fontFamily: theme.FONT_FAMILY.MONTSERRAT.BOLD,
-          fontSize: 13,
-        },
-      }}
-    >
-      <TabScreen
-        name="home"
-        component={Home}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <House weight="fill" size={32} color={color} />
-          ),
-          tabBarLabel: "Home",
+    <>
+      <TabNavigator
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: true,
+          tabBarActiveTintColor: theme.COLORS.WHITE,
+          tabBarInactiveTintColor: "rgba(255, 255, 255, 0.5)",
+          tabBarStyle: {
+            backgroundColor: theme.COLORS.PURPLE_300,
+            borderTopWidth: 0,
+            height: 60,
+            paddingBottom: 5,
+            paddingTop: 5,
+          },
+          tabBarLabelStyle: {
+            fontFamily: theme.FONT_FAMILY.MONTSERRAT.BOLD,
+            fontSize: 14,
+          },
         }}
-      />
-      <TabScreen
-        name="groupsStack"
-        component={GroupStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <UsersFour weight="fill" size={32} color={color} />
-          ),
-          tabBarLabel: "Grupos",
-        }}
-      />
-      <TabScreen
-        name="eventsStack"
-        component={EventStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <CalendarBlank weight="fill" size={32} color={color} />
-          ),
-          tabBarLabel: "Eventos",
-        }}
-      />
-      <TabScreen
-        name="friendsStack"
-        component={FriendsStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Users weight="fill" size={32} color={color} />
-          ),
-          tabBarLabel: "Amigos",
-        }}
-      />
-    </TabNavigator>
+      >
+        <TabScreen
+          name="home"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <House weight="fill" size={25} color={color} />
+            ),
+            tabBarLabel: "Home",
+          }}
+        />
+        <TabScreen
+          name="groupsStack"
+          component={GroupStack}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <UsersFour weight="fill" size={25} color={color} />
+            ),
+            tabBarLabel: "Grupos",
+          }}
+        />
+        <TabScreen
+          name="eventsStack"
+          component={EventStack}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <CalendarBlank weight="fill" size={25} color={color} />
+            ),
+            tabBarLabel: "Eventos",
+          }}
+        />
+        <TabScreen
+          name="friendsStack"
+          component={FriendsStack}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Users weight="fill" size={25} color={color} />
+            ),
+            tabBarLabel: "Amigos",
+          }}
+        />
+        <TabScreen
+          name="configStack"
+          component={ConfigStack}
+          options={{
+            tabBarIcon: ({ color }) => (
+              <Gear weight="fill" size={25} color={color} />
+            ),
+            tabBarLabel: "Config",
+          }}
+        />
+      </TabNavigator>
+    </>
   );
 }

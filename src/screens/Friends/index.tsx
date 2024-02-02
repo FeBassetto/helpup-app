@@ -26,7 +26,6 @@ export function Friends() {
   }
   return (
     <Container>
-      <Header />
       <ContentContainer>
         <Slider
           firstContent={<NewFriends focus={isFocus} />}

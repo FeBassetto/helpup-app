@@ -43,7 +43,6 @@ export function Events({ route }: EventsScreenProps) {
   }
   return (
     <Container>
-      <Header />
       <ContentContainer>
         <Slider
           firstContent={<NewEvents focus={isFocus} eventType={eventType} />}

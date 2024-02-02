@@ -204,7 +204,6 @@ export function Event() {
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>{title}</Title>
         <Description>{description}</Description>

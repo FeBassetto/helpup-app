@@ -37,7 +37,7 @@ export function PopUp() {
   return (
     <Container style={animatedStyle}>
       <PopUpContainer>
-        <Title>Deseja excluir sua conta?</Title>
+        <Title>Deseja executar esta ação?</Title>
         <ButtonsContainer>
           <Button
             background="light"

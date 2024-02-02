@@ -72,7 +72,6 @@ export function EditGroup() {
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>Edite seu Grupo</Title>
         <Input

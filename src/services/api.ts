@@ -1,10 +1,9 @@
-import { APP, API_DEV, API_PROD } from "@env";
+import { APP, API_DEV, API_PROD} from "@env";
 import {
   storageAuthTokenGet,
-  storageAuthTokenRemove,
   storageAuthTokenSave,
 } from "@storage/storageAuthToken";
-import { clearAuth, fetchStorageAuth } from "@store/actions/authActions";
+import { fetchStorageAuth, logOut } from "@store/actions/authActions";
 import { store } from "@store/index";
 import { showError } from "@utils/showError";
 import axios from "axios";
@@ -17,6 +16,17 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.type === "ACCOUNT_NOT_FOUND" &&
+      !originalRequest._retry
+    ) {
+      showError("Tivemos um problema com sua conta, tente logar novamente!");
+
+      store.dispatch(logOut());
+    }
 
     if (
       error.response &&
@@ -56,8 +66,7 @@ api.interceptors.response.use(
 
         throw new Error("No data in refresh token response");
       } catch (refreshError) {
-        await storageAuthTokenRemove();
-        store.dispatch(clearAuth());
+        store.dispatch(logOut());
         showError("Sua sessão expirou, faça o login novamente!");
         return Promise.resolve(error.response);
       }

@@ -27,7 +27,6 @@ export function Groups() {
 
   return (
     <Container>
-      <Header />
       <ContentContainer>
         <Slider
           firstContent={<NewGroups focus={isFocus} />}

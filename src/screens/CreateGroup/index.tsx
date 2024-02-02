@@ -43,7 +43,6 @@ export function CreateGroup() {
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>Crie seu Grupo</Title>
         <Input onTextChange={setTitle} placeholder="Titulo" value={title} />

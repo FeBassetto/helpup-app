@@ -31,7 +31,6 @@ export type CommunityOrEvent = CommunityWithPress | EventWithPress;
 
 export function Carousel({ title, data, type, ...props }: CarouselProps) {
   const navigation = useNavigation<AppNavigatorRoutesProps>();
-  // TODO: Redirecionar para pagina passando o type como parametro
 
   return (
     <Container {...props}>

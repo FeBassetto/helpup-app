@@ -125,13 +125,12 @@ export function Friend() {
     }
 
     if (isFriends === "pending-accept") {
-      // TODO redirecionar para pedidos de amizades
+      navigation.navigate("friendInvitations");
     }
   };
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>{name}</Title>
         <ProfileImage

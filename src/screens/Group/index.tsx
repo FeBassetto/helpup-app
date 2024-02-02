@@ -198,7 +198,6 @@ export function Group() {
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>{title}</Title>
         <Description>{description}</Description>

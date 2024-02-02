@@ -71,7 +71,6 @@ export function CreateEvent() {
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>Crie seu Evento</Title>
         <Input onTextChange={setTitle} placeholder="Titulo" value={title} />

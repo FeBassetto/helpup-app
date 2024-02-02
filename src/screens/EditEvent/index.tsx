@@ -90,7 +90,6 @@ export function EditEvent() {
 
   return (
     <Container>
-      <Header type="back" />
       <ContentContainer>
         <Title>Edite seu Evento</Title>
         <Input

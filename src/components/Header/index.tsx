@@ -8,16 +8,32 @@ import {
 import { ArrowLeft, Bell } from "phosphor-react-native";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { storageAuthTokenRemove } from "@storage/storageAuthToken";
+import { fetchMeNotifications } from "@services/notification/getNotifications";
+import { useQuery } from "react-query";
+import { AxiosResponse } from "axios";
+import { NotificationsResponse } from "@dtos/notification/notificationDTO";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/reducer";
 
 interface HeaderProps {
   type?: "primary" | "back";
 }
 
-// TODO: Conectar com websocket e mostrar quantas notificacoes nao lidas tem
-
 export function Header({ type }: HeaderProps) {
   const navigation = useNavigation();
+  const { token } = useSelector((state: RootState) => state.auth);
+
+  function useFetchNotifications(token: string, onlyNew: boolean) {
+    return useQuery<AxiosResponse<NotificationsResponse>>(
+      ["notifications", { onlyNew }],
+      () => fetchMeNotifications({ token, onlyNew }),
+      {}
+    );
+  }
+
+  const { data } = useFetchNotifications(token, true);
+
+  const notifications = data?.data.notifications || [];
 
   return (
     <Container>
@@ -30,15 +46,13 @@ export function Header({ type }: HeaderProps) {
         </TouchableOpacity>
       )}
       <Logo type="secondary" />
-      <NotificationContainer
-        onPress={() => {
-          storageAuthTokenRemove();
-        }}
-      >
+      <NotificationContainer onPress={() => {}}>
         <Bell weight="fill" color="#ffffff" size={30} />
-        <NotificationNumber>
-          <NotificationText>1</NotificationText>
-        </NotificationNumber>
+        {notifications.length > 0 && (
+          <NotificationNumber>
+            <NotificationText>{notifications.length}</NotificationText>
+          </NotificationNumber>
+        )}
       </NotificationContainer>
     </Container>
   );
