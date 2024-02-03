@@ -32,6 +32,7 @@ import { FriendInvitations } from "@screens/FriendInvitations";
 import { Config } from "@screens/Config";
 import { Header } from "@components/Header";
 import { Notifications } from "@screens/Notifications";
+import { EditAccount } from "@screens/EditAcount";
 
 export type AppRoutes = {
   home: undefined;
@@ -61,6 +62,7 @@ export type AppRoutes = {
   config: undefined;
   configStack: NavigatorScreenParams<StackParamList> | undefined;
   notifications: undefined;
+  editAccount: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -90,6 +92,7 @@ type StackParamList = {
   config: undefined;
   configStack: undefined;
   notifications: undefined;
+  editAccount: undefined;
 };
 
 export type GroupStackNavigationProp =
@@ -185,6 +188,11 @@ function ConfigStack() {
         name="notifications"
         component={Notifications}
         options={{ header: () => <Header type="back" isNotifications /> }}
+      />
+      <Screen
+        name="editAccount"
+        component={EditAccount}
+        options={{ header: () => <Header type="back" /> }}
       />
     </Navigator>
   );

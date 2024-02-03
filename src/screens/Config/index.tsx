@@ -107,7 +107,13 @@ export function Config() {
     {
       title: "Conta",
       settings: [
-        { Icon: UserCircle, text: "Editar Conta", action: () => {} },
+        {
+          Icon: UserCircle,
+          text: "Editar Conta",
+          action: () => {
+            navigation.navigate("editAccount");
+          },
+        },
         { Icon: Password, text: "Trocar Senha", action: () => {} },
         {
           Icon: Bell,
