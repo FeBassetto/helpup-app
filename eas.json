@@ -1,0 +1,26 @@
+{
+  "cli": {
+    "version": ">= 7.1.2"
+  },
+  "build": {
+    "preview": {
+      "android": {
+        "distribution": "internal"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP": "production",
+        "EXPO_PUBLIC_API_DEV": "http://192.168.15.43:3333/api",
+        "EXPO_PUBLIC_API_PROD": "http://52.67.171.181/api",
+        "EXPO_PUBLIC_S3_BASE_URL": "https://s3-helpup.s3.sa-east-1.amazonaws.com/"
+      }
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_APP": "production",
+        "EXPO_PUBLIC_API_DEV": "http://192.168.15.43:3333/api",
+        "EXPO_PUBLIC_API_PROD": "http://52.67.171.181/api",
+        "EXPO_PUBLIC_S3_BASE_URL": "https://s3-helpup.s3.sa-east-1.amazonaws.com/"
+      }
+    }
+  }
+}

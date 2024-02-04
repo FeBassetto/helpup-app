@@ -1,5 +1,5 @@
 import "@libs/reactotron/config";
-import { StatusBar, Text } from "react-native";
+import { StatusBar } from "react-native";
 
 import { ThemeProvider } from "styled-components/native";
 import { Routes } from "./src/routes";
@@ -8,9 +8,6 @@ import theme from "./src/theme";
 import { Provider } from "react-redux";
 import { store } from "@store/index";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/reducer";
 import { PopUpProvider } from "@contexts/PopUpContext";
 
 export default function App() {
