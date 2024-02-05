@@ -35,6 +35,7 @@ import { Notifications } from "@screens/Notifications";
 import { EditAccount } from "@screens/EditAcount";
 import { UpdatePassword } from "@screens/UpdatePassword";
 import { ContactUs } from "@screens/ContactUs";
+import { Terms } from "@screens/Terms";
 
 export type AppRoutes = {
   home: undefined;
@@ -67,6 +68,7 @@ export type AppRoutes = {
   editAccount: undefined;
   editPassword: undefined;
   contactUs: undefined;
+  terms: undefined;
 };
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -99,6 +101,7 @@ type StackParamList = {
   editAccount: undefined;
   editPassword: undefined;
   contactUs: undefined;
+  terms: undefined;
 };
 
 export type GroupStackNavigationProp =
@@ -208,6 +211,11 @@ function ConfigStack() {
       <Screen
         name="contactUs"
         component={ContactUs}
+        options={{ header: () => <Header type="back" /> }}
+      />
+      <Screen
+        name="terms"
+        component={Terms}
         options={{ header: () => <Header type="back" /> }}
       />
     </Navigator>

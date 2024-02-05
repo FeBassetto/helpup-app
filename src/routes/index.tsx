@@ -61,8 +61,6 @@ export function Routes() {
     setIsTokenLoaded(true);
   };
 
-  useEffect(() => {}, [fontsLoaded, isTokenLoaded]);
-
   useEffect(() => {
     fetchAuthData();
   }, []);

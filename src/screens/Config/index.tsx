@@ -1,4 +1,3 @@
-import { Header } from "@components/Header";
 import {
   ConfigContainer,
   ConfigTitle,
@@ -140,7 +139,13 @@ export function Config() {
             navigation.navigate("contactUs");
           },
         },
-        { Icon: Info, text: "Termos e políticas de uso", action: () => {} },
+        {
+          Icon: Info,
+          text: "Termos e políticas de uso",
+          action: () => {
+            navigation.navigate("terms");
+          },
+        },
       ],
     },
     {
