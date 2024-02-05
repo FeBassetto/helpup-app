@@ -133,7 +133,13 @@ export function Config() {
     {
       title: "Suporte & Sobre",
       settings: [
-        { Icon: Question, text: "Ajuda e Suporte", action: () => {} },
+        {
+          Icon: Question,
+          text: "Ajuda e Suporte",
+          action: () => {
+            navigation.navigate("contactUs");
+          },
+        },
         { Icon: Info, text: "Termos e políticas de uso", action: () => {} },
       ],
     },
@@ -152,7 +158,13 @@ export function Config() {
     {
       title: "Ações",
       settings: [
-        { Icon: Warning, text: "Reportar problema", action: () => {} },
+        {
+          Icon: Warning,
+          text: "Reportar problema",
+          action: () => {
+            navigation.navigate("contactUs");
+          },
+        },
         {
           Icon: WarningCircle,
           text: "Excluir Conta",
