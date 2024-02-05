@@ -27,7 +27,7 @@ export function Terms() {
     {
       title: "Requisitos de Idade",
       description:
-        "Os usuários devem ter pelo menos 13 anos de idade para usar o Helpup, em conformidade com as leis gerais sobre a idade mínima para consentimento online.",
+        "Os usuários devem ter pelo menos 18 anos de idade para usar o Helpup, em conformidade com as leis gerais sobre a idade mínima para consentimento online.",
     },
     {
       title: "Privacidade e Proteção de Dados",
@@ -67,7 +67,7 @@ export function Terms() {
     {
       title: "Feedback e Contato",
       description:
-        "Para feedback ou suporte, entre em contato pelo e-mail [email protected] ou através da área de ajuda do aplicativo.",
+        "Para feedback ou suporte, entre em contato pelo e-mail felipebtu9@gmail.com ou através da área de ajuda do aplicativo.",
     },
   ];
 
