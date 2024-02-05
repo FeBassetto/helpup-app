@@ -3,7 +3,10 @@ import {
   Container,
   Description,
   HighlightedText,
+  LinkDescription,
+  StyledContainer,
   StyledImage,
+  StyledLink,
   Title,
 } from "./styles";
 import ImageSrc from "@assets/imgs/smile.png";
@@ -17,6 +20,8 @@ import {
   clearSignUpData,
   fetchStorageSignUp,
 } from "@store/actions/signUpActions";
+import { TouchableOpacity, View } from "react-native";
+import { openURL } from "@utils/openUrl";
 
 export function PreSignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,12 +58,22 @@ export function PreSignUp() {
         melhorar sua expêriencia no app. Mas fique tranquilo, seus dados não
         serão compartilhados para externos.
       </Description>
+      <StyledContainer>
+        <LinkDescription>Veja nossos termos: </LinkDescription>
+        <TouchableOpacity
+          onPress={() => {
+            openURL("https://www.helpup.online/terms");
+          }}
+        >
+          <StyledLink>Nossos Termos</StyledLink>
+        </TouchableOpacity>
+      </StyledContainer>
       <Button
         background="dark"
         onPress={() => {
           navigation.navigate("signUp");
         }}
-        value="Continuar"
+        value="Concordo com os termos"
         isLoading={isLoading}
       />
     </Container>

@@ -41,3 +41,27 @@ export const Description = styled.Text`
   margin-top: 10px;
   margin-bottom: 20px;
 `;
+
+export const StyledContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
+
+export const LinkDescription = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.MEDIUM};
+  font-size: ${({ theme }) => `${theme.FONT_SIZE.MD}px`};
+
+  text-align: center;
+`;
+
+export const StyledLink = styled.Text`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.MONTSERRAT.BOLD};
+
+  color: ${({ theme }) => theme.COLORS.PURPLE_300};
+  text-decoration: underline;
+`;
