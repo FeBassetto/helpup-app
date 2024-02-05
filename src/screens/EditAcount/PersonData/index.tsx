@@ -144,7 +144,9 @@ export function PersonData({ name, nick, uri }: PersonDataProps) {
       />
       <Button
         background="dark"
-        onPress={() => {}}
+        onPress={() => {
+          navigation.navigate("editPassword");
+        }}
         value="Trocar senha"
         outline
         style={{ marginTop: 20 }}

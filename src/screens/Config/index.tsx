@@ -114,7 +114,13 @@ export function Config() {
             navigation.navigate("editAccount");
           },
         },
-        { Icon: Password, text: "Trocar Senha", action: () => {} },
+        {
+          Icon: Password,
+          text: "Trocar Senha",
+          action: () => {
+            navigation.navigate("editPassword");
+          },
+        },
         {
           Icon: Bell,
           text: "Notificações",
