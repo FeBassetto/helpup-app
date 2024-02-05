@@ -86,7 +86,6 @@ export function NotificationCard({
     if (isNew) {
       mutate({ id, readAll: false, token });
     }
-    console.log("teste");
 
     const { route } = getInformationsByType(
       notificationType || "event_created"
