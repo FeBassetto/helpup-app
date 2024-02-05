@@ -115,7 +115,7 @@ export function EditEvent() {
           placeholder="Número"
           hasText={!!newNumber.length}
           value={newNumber}
-          keyboardType="number-pad"
+          keyboardType="numeric"
         />
         <OptionTypes
           selectOption={(type) => setNewType(type)}

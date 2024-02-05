@@ -176,7 +176,7 @@ export function SecondPage(props: Props) {
         editable={cepResults !== null ? true : field === "cep" ? true : false}
         maxLength={field === "cep" ? 8 : undefined}
         keyboardType={
-          field === "cep" || field == "number" ? "number-pad" : "default"
+          field === "cep" || field == "number" ? "numeric" : "default"
         }
       />
     );

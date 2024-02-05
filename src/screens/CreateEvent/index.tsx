@@ -85,7 +85,7 @@ export function CreateEvent() {
           onTextChange={setNumber}
           placeholder="Número"
           value={number}
-          keyboardType="number-pad"
+          keyboardType="numeric"
         />
         <OptionTypes selectOption={(type) => setType(type)} activeType={type} />
         <DatePicker date={date} type="date" onChangeDate={setDate} />

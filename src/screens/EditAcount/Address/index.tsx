@@ -73,7 +73,7 @@ export function Address({ cep }: AddressProps) {
       <Input
         onTextChange={setNewCep}
         placeholder="CEP"
-        keyboardType="number-pad"
+        keyboardType="numeric"
         value={newCep}
         hasText={!!newCep}
       />
