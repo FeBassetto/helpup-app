@@ -9,6 +9,7 @@ import Toast from "react-native-toast-message";
 import { ChildContainer } from "@screens/SignUp/styles";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { BackHandler, ScrollViewProps } from "react-native";
+import { showError } from "@utils/showError";
 
 type FormFields =
   | "name"
@@ -38,14 +39,6 @@ export function FirstPage({ ...props }: Props) {
 
   const handleInputChange = (field: FormFields) => (value: string) => {
     setForm({ ...form, [field]: value });
-  };
-
-  const showError = (message: string) => {
-    setIsLoading(false);
-    Toast.show({
-      text1: message,
-      type: "info",
-    });
   };
 
   const validateForm = () => {
